@@ -1,0 +1,17 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body text-center">
+
+<table>
+    <tr>
+       <th>date</th><th>netsales</th><th>numorders</th>
+    </tr>
+ 
+    <% for (var i = 0; i < saleshistory.length; i++) { %>
+     <tr>
+       <td><%= saleshistory[i].date %></td>
+       <td><%= saleshistory[i].netsales %></td>
+       <td><%= saleshistory[i].numorders %></td>
+     </tr>    
+    <% } %>
+ </table>

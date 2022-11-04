@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const { redirect } = require('express/lib/response');
 const router = express.Router();
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
@@ -22,6 +23,7 @@ process.on('SIGINT', function() {
 router.get('/managers', (req, res) => {
     res.render('managers');
 });
+
 router.get('/inventory', (req, res) => {
     inventory = []
     pool
@@ -33,6 +35,20 @@ router.get('/inventory', (req, res) => {
             const data = {inventory: inventory};
             console.log(inventory);
             res.render('inventory', data);
+        });
+});
+
+router.get('/saleshistory', (req, res) => {
+    saleshistory = []
+    pool
+        .query('SELECT * FROM saleshistory order by date;')
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++) {
+                saleshistory.push(query_res.rows[i]);
+            }
+            const data = {saleshistory: saleshistory};
+            console.log(saleshistory);
+            res.render('saleshistory', data);
         });
 });
 module.exports = router;
