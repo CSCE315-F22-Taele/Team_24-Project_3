@@ -55,7 +55,7 @@ router.get('/saleshistory', (req, res) => {
 router.get('/employeelist' , (req, res) => {
     employeelist = []
     pool
-        .query('SELECT * FROM employees ORDER BY id;')
+        .query('SELECT * FROM employees;')
         .then(query_res => {
             for(let i = 0; i < query_res.rowCount; ++i) {
                 employeelist.push(query_res.rows[i]);
@@ -63,6 +63,6 @@ router.get('/employeelist' , (req, res) => {
             const data = {employeelist, employeelist};
             console.log(employeelist);
             res.render('employeelist', data);
-        })
-})
+        });
+});
 module.exports = router;
