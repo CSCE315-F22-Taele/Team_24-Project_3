@@ -51,4 +51,18 @@ router.get('/saleshistory', (req, res) => {
             res.render('saleshistory', data);
         });
 });
+
+router.get('/employeelist' , (req, res) => {
+    employeelist = []
+    pool
+        .query('SELECT * FROM employees ORDER BY id;')
+        .then(query_res => {
+            for(let i = 0; i < query_res.rowCount; ++i) {
+                employeelist.push(query_res.rows[i]);
+            }
+            const data = {employeelist, employeelist};
+            console.log(employeelist);
+            res.render('employeelist', data);
+        })
+})
 module.exports = router;

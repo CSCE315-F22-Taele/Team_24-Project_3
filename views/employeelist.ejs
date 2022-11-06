@@ -1,0 +1,16 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body text-center">
+
+<table>
+    <tr>
+       <th>id</th><th>name</th>
+    </tr>
+ 
+    <% for (var i = 0; i < employeelist.length; i++) { %>
+     <tr>
+       <td><%= inventory[i].id %></td>
+       <td><%= inventory[i].name %></td>
+     </tr>    
+    <% } %>
+ </table>
