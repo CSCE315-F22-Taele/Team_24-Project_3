@@ -32,7 +32,7 @@ router.post('/inventory', (req, res) => {
             if (err) throw err;
             console.log(result.rows);
         })
-        res.redirect('back');
+        res.redirect('/inventory/inventory');
 });
 router.get('/inventory', (req, res) => {
     inventory = []
