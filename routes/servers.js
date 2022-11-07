@@ -36,4 +36,17 @@ router.get('/restockreport', (req, res) => {
             res.render('restockreport', data);
         });
 });
+router.get('/itemsales' , (req, res) => {
+    itemsales = []
+    pool
+        .query('SELECT * FROM itemizedhistory;')
+        .then(query_res => {
+            for(let i = 0; i < query_res.rowCount; ++i) {
+                itemsales.push(query_res.rows[i]);
+            }
+            const data = {itemsales: itemsales};
+            console.log(itemsales);
+            res.render('itemsales', data);
+        });
+});
 module.exports = router;
