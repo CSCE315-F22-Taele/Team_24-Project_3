@@ -65,4 +65,19 @@ router.get('/employeelist' , (req, res) => {
             res.render('employeelist', data);
         });
 });
+
+router.get('/menu' , (req, res) => {
+    menu = []
+    pool
+        .query('SELECT id,item,price FROM inventory WHERE (id BETWEEN 0 AND 23) OR (id BETWEEN 27 AND 32) AND item!=\'napkins\' OR id>38 ORDER BY id;')
+        .then(query_res => {
+            for(let i = 0; i < query_res.rowCount; ++i) {
+                menu.push(query_res.rows[i]);
+            }
+            const data = {menu, menu};
+            console.log(menu);
+            res.render('menu', data);
+        });
+});
+
 module.exports = router;
