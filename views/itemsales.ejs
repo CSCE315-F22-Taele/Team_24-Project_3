@@ -1,0 +1,17 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body text-center">
+
+<table>
+    <tr>
+       <th>date</th><th>item</th><th>price</th>
+    </tr>
+ 
+    <% for (var i = 0; i < itemsales.length; i++) { %>
+     <tr>
+       <td><%= itemsales[i].date %></td>
+       <td><%= itemsales[i].item %></td>
+       <td><%= itemsales[i].price %></td>
+     </tr>    
+    <% } %>
+ </table>
