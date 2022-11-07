@@ -35,6 +35,7 @@ router.post('/inventory', (req, res) => {
         })
         res.redirect('/managers/inventory');
 });
+
 router.get('/inventory', (req, res) => {
     inventory = []
      pool
@@ -86,9 +87,27 @@ router.get('/menu' , (req, res) => {
                 menu.push(query_res.rows[i]);
             }
             const data = {menu, menu};
-            console.log(menu);
+            // console.log(menu);
             res.render('menu', data);
         });
+});
+
+router.post('/menu', (req, res) => {
+    let{id,price} = req.body;
+
+    // if(id < 0) {
+        
+    // }
+    // if(price < 0) {
+
+    // }
+
+    pool
+        .query('UPDATE inventory SET price = $1 WHERE id = $2;',[price, id], (err, result) => {
+            if (err) throw err;
+            console.log(result.rows);
+        })
+        res.redirect('/managers/menu');
 });
 
 module.exports = router;
