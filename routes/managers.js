@@ -24,6 +24,7 @@ process.on('SIGINT', function() {
 router.get('/managers', (req, res) => {
     res.render('managers');
 });
+
 router.post('/inventory', (req, res) => {
     let{id,quantity} = req.body;
     console.log({id,quantity});
