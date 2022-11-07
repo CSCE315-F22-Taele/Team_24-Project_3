@@ -1,7 +1,9 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
+const bodyParser = require('body-parser');
 const port = 3000;
+app.use(bodyParser.urlencoded());
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.use(express.static('views'))

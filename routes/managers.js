@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const { redirect } = require('express/lib/response');
 const router = express.Router();
 const { Pool } = require('pg');
@@ -23,10 +24,19 @@ process.on('SIGINT', function() {
 router.get('/managers', (req, res) => {
     res.render('managers');
 });
-
+router.post('/inventory', (req, res) => {
+    let{id,quantity} = req.body;
+    console.log({id,quantity});
+    pool
+        .query('UPDATE inventory SET quantity = $1 WHERE id = $2;',[quantity, id], (err, result) => {
+            if (err) throw err;
+            console.log(result.rows);
+        })
+        res.redirect('back');
+});
 router.get('/inventory', (req, res) => {
     inventory = []
-    pool
+     pool
         .query('SELECT * FROM inventory order by id;')
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
