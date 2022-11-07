@@ -13,6 +13,7 @@ app.use('/employeelist',require('./routes/managers.js'));
 app.use('/menu', require('./routes/managers.js'));
 app.use('/managers',require('./routes/managers.js'));
 app.use('/servers',require('./routes/servers.js'));
+app.use('/restockreport',require('./routes/servers.js'));
 app.use
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
