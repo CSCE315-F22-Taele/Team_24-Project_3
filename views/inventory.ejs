@@ -12,7 +12,15 @@
   <input type = "submit" value = "Update"/>
 </div>
 </form>
-
+<ul>
+  <div class="col-sm">
+    <div class="text-danger">
+  <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+  <li><%= error.message %></li>
+  <% }) %> <% } %>
+</div>
+</div>
+</ul>
 <table>
     <tr>
        <th>id</th><th>item</th><th>category</th><th>quantity</th><th>price</th>
