@@ -26,13 +26,25 @@ router.get('/managers', (req, res) => {
 });
 router.post('/inventory', (req, res) => {
     let{id,quantity} = req.body;
+    let errors =[];
+    if(parseInt(id)<0 || parseInt(quantity)<0){
+        errors.push({message: "Input can not be negative, please try again"});
+    }
+    if(parseInt(id)>40){
+        errors.push({message:"Input id bigger than the maximum, please try again"})
+    }
+    if(errors.length>0){
+    console.log(errors);
+    res.render('inventory', {errors,id,quantity});
     console.log({id,quantity});
+    }else{
     pool
         .query('UPDATE inventory SET quantity = $1 WHERE id = $2;',[quantity, id], (err, result) => {
             if (err) throw err;
             console.log(result.rows);
         })
-        res.redirect('/managers/inventory');
+        res.redirect('/managers/inventory');}
+        
 });
 router.get('/inventory', (req, res) => {
     inventory = []
