@@ -22,8 +22,10 @@ app.use('/employeelist',require('./routes/managers.js'));
 app.use('/menu', require('./routes/managers.js'));
 app.use('/managers',require('./routes/managers.js'));
 
-//MANAGER LOGIN
+//LOGIN
 app.use('/managerlogin', require('./routes/managerlogin.js'));
+app.use('/serverlogin', require('./routes/serverlogin.js'));
+
 
 //SERVERS
 app.use('/servers',require('./routes/servers.js'));
