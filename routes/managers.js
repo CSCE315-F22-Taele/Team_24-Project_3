@@ -29,7 +29,7 @@ router.post('/inventory', (req, res) => {
     let{id,quantity} = req.body;
     let errors =[];
     if(parseInt(id)<0 || parseInt(quantity)<0){
-        errors.push({message: "Input can not be negative, please try again"});
+        errors.push({message: "Input cannot be negative, please try again"});
     }
     if(parseInt(id)>40){
         errors.push({message:"Input id bigger than the maximum, please try again"})

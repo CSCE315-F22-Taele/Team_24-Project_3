@@ -22,6 +22,9 @@ app.use('/employeelist',require('./routes/managers.js'));
 app.use('/menu', require('./routes/managers.js'));
 app.use('/managers',require('./routes/managers.js'));
 
+//MANAGER LOGIN
+app.use('/managerlogin', require('./routes/managerlogin.js'));
+
 //SERVERS
 app.use('/servers',require('./routes/servers.js'));
 app.use('/restockreport',require('./routes/servers.js'));
