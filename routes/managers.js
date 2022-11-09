@@ -111,7 +111,7 @@ router.post('/menu', (req, res) => {
     if(parseInt(id) < 0 || parseFloat(price) < 0) {
         errors.push({message : "Input can not be negative, please try again!"});
     }
-    if(erriors.length > 0) {
+    if(errors.length > 0) {
         console.log(errors);
         res.render('menu', {errors,id,price});
         console.log({id,price});

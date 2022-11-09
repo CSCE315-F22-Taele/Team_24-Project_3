@@ -19,15 +19,15 @@ router.get('/managerlogin', (req, res) => {
 
 router.post('/managerlogin', (req, res) => {
     let{username, password} = req.body;
-    let error = "";
+    let errors = [];
 
     if (username == "pandaboss" && password == "567") {
         res.redirect('/managers/managers');
     }
     else {
-        error = "Username and password do not match";
-        console.log(error);
-        res.render('managerlogin', {error, username, password});
+        errors.push( {message: "Username and password do not match"});
+        console.log(errors);
+        res.render('managerlogin', {errors, username, password});
     }
 });
 
