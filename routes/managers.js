@@ -34,17 +34,18 @@ router.post('/inventory', (req, res) => {
     if(parseInt(id)>40){
         errors.push({message:"Input id bigger than the maximum, please try again"})
     }
-    if(errors.length>0){
-    console.log(errors);
-    res.render('inventory', {errors,id,quantity});
-    console.log({id,quantity});
-    }else{
-    pool
-        .query('UPDATE inventory SET quantity = $1 WHERE id = $2;',[quantity, id], (err, result) => {
-            if (err) throw err;
-            console.log(result.rows);
-        })
-        res.redirect('/managers/inventory');}
+    if(errors.length>0) {
+        console.log(errors);
+        res.render('inventory', {errors,id,quantity});
+        console.log({id,quantity});
+    }
+    else {
+        pool
+            .query('UPDATE inventory SET quantity = $1 WHERE id = $2;',[quantity, id], (err, result) => {
+                if (err) throw err;
+                console.log(result.rows);
+            })
+            res.redirect('/managers/inventory');}
         
 });
 
@@ -106,20 +107,23 @@ router.get('/menu' , (req, res) => {
 
 router.post('/menu', (req, res) => {
     let{id,price} = req.body;
-
-    // if(id < 0) {
-        
-    // }
-    // if(price < 0) {
-
-    // }
-
-    pool
-        .query('UPDATE inventory SET price = $1 WHERE id = $2;',[price, id], (err, result) => {
-            if (err) throw err;
-            console.log(result.rows);
-        })
-        res.redirect('/managers/menu');
+    let errors = [];
+    if(parseInt(id) < 0 || parseFloat(price) < 0) {
+        errors.push({message : "Input can not be negative, please try again!"});
+    }
+    if(erriors.length > 0) {
+        console.log(errors);
+        res.render('menu', {errors,id,price});
+        console.log({id,price});
+    }
+    else {
+        pool
+            .query('UPDATE inventory SET price = $1 WHERE id = $2;',[price, id], (err, result) => {
+                if (err) throw err;
+                console.log(result.rows);
+            })
+            res.redirect('/managers/menu');
+    }
 });
 
 module.exports = router;
