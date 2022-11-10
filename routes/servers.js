@@ -23,6 +23,11 @@ process.on('SIGINT', function() {
 router.get('/servers', (req, res) => {
     res.render('servers');
 });
+
+router.get('/order', (req, res) => {
+    res.render('order');
+})
+
 router.get('/restockreport', (req, res) => {
     restockreport = []
     pool
