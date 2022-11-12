@@ -125,5 +125,31 @@ router.post('/menu', (req, res) => {
             res.redirect('/managers/menu');
     }
 });
+router.post('/menu1', (req, res) => {
+    let{item,category,price} = req.body;
+    var maxid;
+    let errors = [];
+    if(parseFloat(price) < 0) {
+        errors.push({message : "Input can not be negative, please try again!"});
+    }
+    if(errors.length > 0) {
+        console.log(errors);
+        res.render('menu', {errors,id,price});
+        console.log({id,price});
+    }
+    else {
+        pool
+        .query('SELECT id FROM inventory WHERE id=(SELECT max(id) FROM inventory);', (err, result) => {
+            if (err) throw err;
+            maxid = result.rows[0].id;
+            console.log(maxid);
+            pool
+            .query('INSERT INTO inventory VALUES ($1,$2,$3,100,$4);',[maxid+1,item,category,price],(err, result) => {
+            if (err) throw err;
+        })
+        })
+            res.redirect('/managers/menu');
+    }
+});
 
 module.exports = router;
