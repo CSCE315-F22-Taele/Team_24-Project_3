@@ -4,6 +4,13 @@
 
 <div class="container">
     <div class="row">
+        <% for (var i =1; i <=orderarr.length-2;  i++ ) { %>
+            <br/>  
+                <button type="button" class="btn btn-primary btn-lg">
+                <%= orderarr[i].item%> 
+                </button> 
+            <% } %>
+        
         <div class="col-sm">
             <a href="/servers/order/bowl">
                 <button type="button" class="btn btn-primary btn-lg">
@@ -26,21 +33,21 @@
             </a>
         </div>
         <div class="col-sm">
-            <a href="/servers/order/biggerplate">
+            <a href="/servers/order/sides">
                 <button type="button" class="btn btn-primary btn-lg">
-                    A La Carte
+                    Sides
                 </button>
             </a>
         </div>
         <div class="col-sm">
-            <a href="/servers/order/biggerplate">
+            <a href="/servers/order/entrees">
                 <button type="button" class="btn btn-primary btn-lg">
-                    Appetizers
+                    Entrees
                 </button>
             </a>
         </div>
         <div class="col-sm">
-            <a href="/servers/order/biggerplate">
+            <a href="/servers/order/drinks">
                 <button type="button" class="btn btn-primary btn-lg">
                     Drinks
                 </button>

@@ -19,6 +19,7 @@
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.3",
+    "google-translate": "^3.0.0",
     "module-exports": "^1.0.0",
     "mongoose": "^6.7.1",
     "pg": "^8.8.0"

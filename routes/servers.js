@@ -25,7 +25,17 @@ router.get('/servers', (req, res) => {
 });
 
 router.get('/order', (req, res) => {
-    res.render('order');
+    orderarr = []
+    pool
+        .query("SELECT item FROM inventory WHERE (id BETWEEN 0 AND 23) OR (id BETWEEN 27 AND 32) AND item!='napkins' OR id>38 ORDER BY id;")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                orderarr.push(query_res.rows[i]);
+            }
+            const data = {orderarr: orderarr};
+            console.log(orderarr);
+            res.render('order', data);
+        });
 })
 
 router.get('/restockreport', (req, res) => {
