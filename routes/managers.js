@@ -31,9 +31,6 @@ router.post('/inventory', (req, res) => {
     if(parseInt(id)<0 || parseInt(quantity)<0){
         errors.push({message: "Input cannot be negative, please try again"});
     }
-    if(parseInt(id)>40){
-        errors.push({message:"Input id bigger than the maximum, please try again"})
-    }
     if(errors.length>0) {
         console.log(errors);
         res.render('inventory', {errors,id,quantity});
@@ -58,7 +55,6 @@ router.get('/inventory', (req, res) => {
                 inventory.push(query_res.rows[i]);
             }
             const data = {inventory: inventory};
-            console.log(inventory);
             res.render('inventory', data);
         });
 });
