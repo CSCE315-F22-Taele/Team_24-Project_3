@@ -20,9 +20,40 @@ process.on('SIGINT', function() {
     process.exit(0);
 });
 
+//SERVER BUTTON
 router.get('/servers', (req, res) => {
     res.render('servers');
 });
+
+
+//ORDER BUTTONS 
+router.get('/order/bowl', (req, res) => {
+    res.render('bowl');
+});
+
+router.get('/order/drinks', (req, res) => {
+    res.render('drinks');
+});
+
+router.get('/order/entrees', (req, res) => {
+    res.render('entrees');
+});
+
+router.get('/order/sides', (req, res) => {
+    res.render('sides');
+});
+
+router.get('/order/biggerplate', (req, res) => {
+    res.render('biggerplate');
+});
+
+router.get('/order/plate', (req, res) => {
+    res.render('biggerplate');
+});
+
+
+
+
 
 router.get('/order', async (req, res) => {
     orderarr = []

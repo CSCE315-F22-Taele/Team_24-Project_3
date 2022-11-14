@@ -30,8 +30,16 @@ app.use('/serverlogin', require('./routes/serverlogin.js'));
 //SERVERS
 app.use('/servers',require('./routes/servers.js'));
 app.use('/restockreport',require('./routes/servers.js'));
-app.use('/order',require('./routes/servers.js'))
-app.use('/itemsales',require('./routes/servers.js'))
+app.use('/order',require('./routes/servers.js'));
+app.use('/itemsales',require('./routes/servers.js'));
+
+//ORDER BUTTON ROUTES 
+app.use('/bowl',require('./routes/servers.js'));
+app.use('/drinks',require('./routes/servers.js'));
+app.use('/biggerplate',require('./routes/servers.js'));
+app.use('/plate',require('./routes/servers.js'));
+app.use('/sides',require('./routes/servers.js'));
+app.use('/entrees',require('./routes/servers.js'))
 
 
 app.listen(port, () => {
