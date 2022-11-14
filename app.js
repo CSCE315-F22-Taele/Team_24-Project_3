@@ -32,6 +32,7 @@ app.use('/servers',require('./routes/servers.js'));
 app.use('/restockreport',require('./routes/servers.js'));
 app.use('/order',require('./routes/servers.js'));
 app.use('/itemsales',require('./routes/servers.js'));
+app.use('/orderslist',require('./routes/servers.js'));
 
 //ORDER BUTTON ROUTES 
 app.use('/bowl',require('./routes/servers.js'));

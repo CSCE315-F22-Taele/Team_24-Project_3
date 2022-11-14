@@ -108,4 +108,18 @@ router.get('/itemsales' , (req, res) => {
             res.render('itemsales', data);
         });
 });
+
+router.get('/orderslist' , (req, res) => {
+    orderslist = []
+    pool
+        .query('SELECT * FROM currentorders;')
+        .then(query_res => {
+            for(let i = 0; i < query_res.rowCount; ++i) {
+                orderslist.push(query_res.rows[i]);
+            }
+            const data = {orderslist: orderslist};
+            console.log(orderslist);
+            res.render('orderslist', data);
+        });
+});
 module.exports = router;
