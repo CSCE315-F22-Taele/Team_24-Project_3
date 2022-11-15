@@ -32,7 +32,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "http://127.0.0.1:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
@@ -67,6 +67,7 @@ app.use('/managers',require('./routes/managers.js'));
 app.use('/managerlogin', require('./routes/managerlogin.js'));
 app.use('/serverlogin', require('./routes/serverlogin.js'));
 app.get('/loginsuccess', (req, res) => res.render('loginsuccess'));
+app.get('/error', (req, res) => res.render('error'));
 
 //SERVERS
 app.use('/servers',require('./routes/servers.js'));
