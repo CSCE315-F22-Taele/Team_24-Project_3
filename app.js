@@ -7,6 +7,47 @@ app.use(bodyParser.urlencoded());
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.use(express.static('views'))
+const session = require('express-session');
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'SECRET' 
+  }));
+const passport = require('passport');
+var userProfile;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GOOGLE_CLIENT_ID = '635690037802-ncr8phftrg1bsn2olm0bib0umiar2rkt.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = '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';
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+      userProfile=profile;
+      return done(null, userProfile);
+  }
+));
+ 
+app.get('/auth/google', 
+  passport.authenticate('google', { scope : ['profile', 'email'] }));
+ 
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    res.redirect('/loginsuccess') 
+  });
 
 //LANDING PAGE 
 app.use('/',require('./routes/index.js'));
@@ -25,7 +66,7 @@ app.use('/managers',require('./routes/managers.js'));
 //LOGIN
 app.use('/managerlogin', require('./routes/managerlogin.js'));
 app.use('/serverlogin', require('./routes/serverlogin.js'));
-
+app.get('/loginsuccess', (req, res) => res.render('loginsuccess'));
 
 //SERVERS
 app.use('/servers',require('./routes/servers.js'));

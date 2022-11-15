@@ -3,7 +3,7 @@ const { redirect } = require('express/lib/response');
 const router = express.Router();
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
-// Create express app
+// Create express router
 const port = 3000;
 // Create pool
 const pool = new Pool({
@@ -16,7 +16,7 @@ const pool = new Pool({
 });
 process.on('SIGINT', function() {
     pool.end();
-    console.log('Application successfully shutdown');
+    console.log('routerlication successfully shutdown');
     process.exit(0);
 });
 
