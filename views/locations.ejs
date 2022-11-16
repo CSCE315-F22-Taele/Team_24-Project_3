@@ -1,7 +1,14 @@
 <div class="row mt-5">
     <div class="col-md-6 m-auto">
       <div class="card card-body text-center">
+        <style>
+          #map {
+            height: 300px;
+            width: 100%;
+          }
+        </style>
         <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+        
           <script>
             function translateDropdown() {
               new google.translate.TranslateElement(
@@ -9,7 +16,62 @@
               )
             }
           </script>
+
+          <script>
+            function initMap() {
+              // Panda Express at MSC
+              var PE_MSC = {
+                lat: 30.612223,
+                lng: -96.358898
+              };
+              // PE at Polo
+              var PE_polo = {
+                lat: 30.6226794,
+                lng: -96.3577007
+              }
+              // PE on TX 6
+              var PE_TX6 = {
+                lat: 30.6153285,
+                lng: -96.3319979
+              }
+              // A&M lat + lng for map center
+              var AM = {
+                lat: 30.6186805,
+                lng: -96.3442275
+              }
+
+              var map = new google.maps.Map(
+                document.getElementById('map'), {
+                  zoom: 13.5,
+                  center: AM
+                });
+
+              // marker for MSC PE  
+              var MSC_marker = new google.maps.Marker({
+                position: PE_MSC,
+                map: map
+              });
+
+              // marker for Polo PE
+              var polo_marker = new google.maps.Marker({
+                position: PE_polo,
+                map: map
+              });
+
+              // marker for TX 6 PE
+              var TX_marker = new google.maps.Marker({
+                position: PE_TX6,
+                map: map
+              })
+            }
+          </script>
+
+          <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkcwS72e33Dj_gMgOzJ_XTQkEgVlzprHM&callback=initMap">
+          </script>
+
         <div id="google_translate_id"></div>
         <h1>Locations Near You</h1>
 
+        <div id="map"></div>
         <button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button>
