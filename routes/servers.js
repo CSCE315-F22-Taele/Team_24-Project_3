@@ -73,8 +73,11 @@ router.get('/order', async (req, res) => {
 });
 router.post('/order/reset', (req, res) => {
     pool.query("TRUNCATE TABLE currentorders")
-})
+});
 
+router.post('/order/submito', (req, res) => {
+   //insert into itemized history
+});
 router.get('/restockreport', (req, res) => {
     restockreport = []
     pool

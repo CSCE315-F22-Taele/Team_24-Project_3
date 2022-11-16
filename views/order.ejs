@@ -9,6 +9,10 @@
         <form action = "/servers/order/reset" method = "POST"> 
             <input type = "submit" value = "reset orders"  class="btn btn-primary btn-block mb-2"/> 
         </form>
+
+        <form action = "/servers/order/submito" method = "POST"> 
+            <input type = "submit" value = "submit order"  class="btn btn-primary btn-block mb-2"/> 
+        </form>
     <% for (var i =1; i <=orderarr.length-2;  i++ ) { %>
         <form action = "/servers/order/<%= i %>" method = "POST"> 
         <div class="row">
