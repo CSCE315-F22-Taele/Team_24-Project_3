@@ -25,7 +25,6 @@ router.get('/servers', (req, res) => {
     res.render('servers');
 });
 
-
 //ORDER BUTTONS 
 router.get('/order/bowl', (req, res) => {
     res.render('bowl');
@@ -51,10 +50,6 @@ router.get('/order/plate', (req, res) => {
     res.render('biggerplate');
 });
 
-
-
-
-
 router.get('/order', async (req, res) => {
     orderarr = []
     pool
@@ -68,19 +63,14 @@ router.get('/order', async (req, res) => {
             
             for(let i=1;i<= orderarr.length;i++){
                 router.post('/order/'+i, (req, res) => {
-                            pool.query("INSERT INTO currentorders VALUES ($1,$2)",[orderarr[i].item, orderarr[i].price], (err, result) => {
-                                if (err) throw err;
-                                console.log(i);
-                            })
-                            
-                            })
-                        }
+                    pool.query("INSERT INTO currentorders VALUES ($1,$2)",[orderarr[i].item, orderarr[i].price], (err, result) => {
+                        if (err) throw err;
+                        console.log(i);
+                    })
+                })
+            }
         });
-    });
-   
-
-    
-    
+});
 
 router.get('/restockreport', (req, res) => {
     restockreport = []
@@ -95,6 +85,7 @@ router.get('/restockreport', (req, res) => {
             res.render('restockreport', data);
         });
 });
+
 router.get('/itemsales' , (req, res) => {
     itemsales = []
     pool

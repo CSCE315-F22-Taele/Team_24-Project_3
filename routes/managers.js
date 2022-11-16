@@ -15,6 +15,7 @@ const pool = new Pool({
     port: process.env.PSQL_PORT,
     ssl: {rejectUnauthorized: false}
 });
+
 process.on('SIGINT', function() {
     pool.end();
     console.log('Application successfully shutdown');
