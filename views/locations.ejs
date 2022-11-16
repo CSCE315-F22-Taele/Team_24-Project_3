@@ -8,7 +8,7 @@
           }
         </style>
         <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
-        
+
           <script>
             function translateDropdown() {
               new google.translate.TranslateElement(
@@ -44,25 +44,36 @@
                 document.getElementById('map'), {
                   zoom: 13.5,
                   center: AM
+              });
+
+              function addMarker(props) {
+                var marker = new google.maps.Marker({
+                  position: props.coordinates,
+                  map: map
                 });
 
-              // marker for MSC PE  
-              var MSC_marker = new google.maps.Marker({
-                position: PE_MSC,
-                map: map
-              });
+                if (props.content) {
+                  var infoWindow = new google.maps.InfoWindow({
+                    content: props.content
+                  });
 
-              // marker for Polo PE
-              var polo_marker = new google.maps.Marker({
-                position: PE_polo,
-                map: map
-              });
+                  marker.addListener('click', function(){
+                    infoWindow.open(map, marker);
+                  });
 
-              // marker for TX 6 PE
-              var TX_marker = new google.maps.Marker({
-                position: PE_TX6,
-                map: map
-              })
+                  marker.addListener('mouseover', function(){
+                    infoWindow.open(map, marker);
+                  });
+                }
+              }
+
+              // markers for each PE location
+              addMarker({coordinates: PE_MSC, 
+                content: "<div>Panda Express @ MSC</div><div>Open 7 days/week 11AM-10PM</div>275 Joe Routt Blvd, College Station, TX 77840"});
+              addMarker({coordinates: PE_polo,
+                content: "<div>Panda Express @ Polo</div><div>Open Mon to Fri 11AM-8PM</div>300 Polo Rd Room 129, College Station, TX 77840"});
+              addMarker({coordinates: PE_TX6,
+                content: "<div>Panda Express on TX Ave</div><div>Open Sun to Thu 10:30AM-10PM, Fri to Sat 10:30AM-10:30PM</div>1400 Texas Ave S, College Station, TX 77840"});
             }
           </script>
 
