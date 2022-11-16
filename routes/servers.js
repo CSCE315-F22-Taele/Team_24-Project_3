@@ -51,6 +51,7 @@ router.get('/order/plate', (req, res) => {
 });
 
 router.get('/order', async (req, res) => {
+    pool.query("TRUNCATE TABLE currentorders")
     orderarr = []
     pool
         .query("SELECT item,price FROM inventory WHERE (id BETWEEN 0 AND 23) OR (id BETWEEN 27 AND 32) AND item!='napkins' OR id>38 ORDER BY id;")
@@ -71,6 +72,9 @@ router.get('/order', async (req, res) => {
             }
         });
 });
+router.post('/order/reset', (req, res) => {
+    pool.query("TRUNCATE TABLE currentorders")
+})
 
 router.get('/restockreport', (req, res) => {
     restockreport = []
