@@ -77,6 +77,31 @@ router.post('/order/reset', (req, res) => {
 
 router.post('/order/submito', (req, res) => {
    //insert into itemized history
+   //some error in this
+   const mydate = new Date();
+
+   viewmyorder = []
+   pool
+       .query("SELECT * FROM currentorders")
+       .then(query_res => {
+           for (let i = 0; i < query_res.rowCount; i++){
+               viewmyorder.push(query_res.rows[i]);
+           }
+           const data = {viewmyorder: viewmyorder};
+           res.render('order', data);
+           
+           for(let i=1;i<= viewmyorder.length;i++){
+               router.post('/order/'+i, (req, res) => {
+                   pool.query("INSERT INTO itemizedhistory VALUES ($1,$2, $3)",[mydate, viewmyorder[i].item, viewmyorder[i].price], (err, result) => {
+                       if (err) throw err;
+                       console.log(i);
+                  })
+               })
+           }
+       });
+       pool.query("TRUNCATE TABLE currentorders")
+
+     
 });
 router.get('/restockreport', (req, res) => {
     restockreport = []
