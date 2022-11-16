@@ -32,7 +32,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "http://panda-express.onrender.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
