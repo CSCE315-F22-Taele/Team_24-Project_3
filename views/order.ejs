@@ -2,62 +2,47 @@
     <div class="col-md-6 m-auto">
       <div class="card card-body text-center">
         <div id="google_translate_id"></div>
-
-        <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
+        <a href="/servers/servers" class="btn btn-primary btn-block mb-2">Return</a>
         <a href="/servers/orderslist" class="btn btn-primary btn-block mb-2"
         >View Current Order</a>
         <form action = "/servers/order/reset" method = "POST"> 
             <input type = "submit" value = "reset orders"  class="btn btn-primary btn-block mb-2"/> 
         </form>
-
-        <form action = "/servers/order/submito" method = "POST"> 
-            <input type = "submit" value = "submit order"  class="btn btn-primary btn-block mb-2"/> 
-        </form>
-    <% for (var i =1; i <=orderarr.length-2;  i++ ) { %>
-        <form action = "/servers/order/<%= i %>" method = "POST"> 
-        <div class="row">
-                <input type = "submit" value = <%= orderarr[i].item %> />
-               </form>
-            <% } %>
         
         <div class="col-sm">
-            <a href="/servers/order/bowl">
-                <button type="button" class="btn btn-primary btn-lg">
-                    Bowl : $6.70
-                </button> 
-            </a>
+            <form action = "/servers/order/bowl" method = "POST"> 
+                <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
         </div>
-        <div class="col-sm">
-            <a href="/servers/order/plate">
-                <button type="button" class="btn btn-primary btn-lg">
-                    Plate : $8.20
-                </button>
-            </a>
+    </form>
+
+    <div class="col-sm">
+        <form action = "/servers/order/plate" method = "POST"> 
+            <input type = "submit" value = "Plate: $<%= platelist[0].price %>" class="btn btn-success">
+    </div>
+</form>
+          <div class="col-sm">
+            <form action = "/servers/order/biggerplate" method = "POST"> 
+                <input type = "submit" value = "Bigger plate: $<%= bigplatelist[0].price %>" class="btn btn-success">
         </div>
-        <div class="col-sm">
-            <a href="/servers/order/biggerplate">
-                <button type="button" class="btn btn-primary btn-lg">
-                    Bigger Plate : $9.70
-                </button>
-            </a>
-        </div>
+    </form>
+
         <div class="col-sm">
             <a href="/servers/order/sides">
-                <button type="button" class="btn btn-primary btn-lg">
+                <button type="button" class="btn btn-success">
                     Sides
                 </button>
             </a>
         </div>
         <div class="col-sm">
             <a href="/servers/order/entrees">
-                <button type="button" class="btn btn-primary btn-lg">
+                <button type="button" class="btn btn-success">
                     Entrees
                 </button>
             </a>
         </div>
         <div class="col-sm">
             <a href="/servers/order/drinks">
-                <button type="button" class="btn btn-primary btn-lg">
+                <button type="button" class="btn btn-success">
                     Drinks
                 </button>
             </a>

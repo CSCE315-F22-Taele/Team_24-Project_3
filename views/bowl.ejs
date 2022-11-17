@@ -10,5 +10,15 @@
             }
           </script>
         <div id="google_translate_id"></div>
-        <button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button>
+        <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
         <h1>Bowl: Choose 1 Entree & 1 Side!</h1>
+        <% for (var i =0; i < entreearr.length;  i++ ) { %>
+          <form action = "/servers/order/bowl/entree/<%= i %>" method = "POST"> 
+          <div class="row">
+                  <input type = "submit" value ="<%= entreearr[i].category %>: <%= entreearr[i].item %> " />
+                 </form>
+              <% } %>
+              </div>
+            </div>
+          </div>
+

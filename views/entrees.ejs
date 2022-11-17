@@ -12,3 +12,9 @@
         <div id="google_translate_id"></div>
         <button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button>
         <h1>Entrees</h1>
+        <% for (var i =0; i < entreearr.length;  i++ ) { %>
+          <form action = "/servers/order/entrees/entree/<%= i %>" method = "POST"> 
+          <div class="row">
+                  <input type = "submit" value ="<%= entreearr[i].item %> : $<%= entreearr[i].price %>" />
+                 </form>
+              <% } %>

@@ -27,49 +27,197 @@ router.get('/servers', (req, res) => {
 
 //ORDER BUTTONS 
 router.get('/order/bowl', (req, res) => {
-    res.render('bowl');
+    entreearr = []
+    pool
+        .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                entreearr.push(query_res.rows[i]);
+            }
+            const data = {entreearr: entreearr};
+            res.render('bowl', data);
+            console.log(entreearr.length);
+            for(let i=0;i< entreearr.length;i++){
+                router.post('/order/bowl/entree/'+i, (req, res) => {
+                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].category+": "+ entreearr[i].item], (err, result) => {
+                        if (err) throw err;
+                    })
+                })
+            }
+        });
 });
+
 
 router.get('/order/drinks', (req, res) => {
     res.render('drinks');
 });
 
 router.get('/order/entrees', (req, res) => {
-    res.render('entrees');
-});
-
-router.get('/order/sides', (req, res) => {
-    res.render('sides');
-});
-
-router.get('/order/biggerplate', (req, res) => {
-    res.render('biggerplate');
-});
-
-router.get('/order/plate', (req, res) => {
-    res.render('biggerplate');
-});
-
-router.get('/order', async (req, res) => {
-    orderarr = []
+    entreearr = []
     pool
-        .query("SELECT item,price FROM inventory WHERE (id BETWEEN 0 AND 23) OR (id BETWEEN 27 AND 32) AND item!='napkins' OR id>38 ORDER BY id;")
+        .query("SELECT item,price,category FROM inventory WHERE category = 'entree' ORDER by id;")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
-                orderarr.push(query_res.rows[i]);
+                entreearr.push(query_res.rows[i]);
             }
-            const data = {orderarr: orderarr};
-            res.render('order', data);
-            
-            for(let i=1;i<= orderarr.length;i++){
-                router.post('/order/'+i, (req, res) => {
-                    pool.query("INSERT INTO currentorders VALUES ($1,$2)",[orderarr[i].item, orderarr[i].price], (err, result) => {
+            const data = {entreearr: entreearr};
+            res.render('entrees', data);
+            console.log(entreearr.length);
+            for(let i=0;i< entreearr.length;i++){
+                router.post('/order/entrees/entree/'+i, (req, res) => {
+                    pool.query("INSERT INTO currentorders VALUES ($1,$2)",[entreearr[i].item,entreearr[i].price], (err, result) => {
                         if (err) throw err;
-                        console.log(i);
                     })
                 })
             }
         });
+});
+
+router.get('/order/sides', (req, res) => {
+    entreearr = []
+    pool
+        .query("SELECT item,price,category FROM inventory WHERE category = 'sides' ORDER by id;")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                entreearr.push(query_res.rows[i]);
+            }
+            const data = {entreearr: entreearr};
+            res.render('sides', data);
+            console.log(entreearr.length);
+            for(let i=0;i< entreearr.length;i++){
+                router.post('/order/sides/entree/'+i, (req, res) => {
+                    pool.query("INSERT INTO currentorders VALUES ($1,$2)",[entreearr[i].item,entreearr[i].price], (err, result) => {
+                        if (err) throw err;
+                    })
+                })
+            }
+        });
+});
+
+router.get('/order/biggerplate', (req, res) => {
+    entreearr = []
+    pool
+        .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                entreearr.push(query_res.rows[i]);
+            }
+            const data = {entreearr: entreearr};
+            res.render('biggerplate', data);
+            console.log(entreearr.length);
+            for(let i=0;i< entreearr.length;i++){
+                router.post('/order/biggerplate/entree/'+i, (req, res) => {
+                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].category+": "+ entreearr[i].item], (err, result) => {
+                        if (err) throw err;
+                    })
+                })
+            }
+        });
+});
+
+router.get('/order/plate', (req, res) => {
+    entreearr = []
+    pool
+        .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                entreearr.push(query_res.rows[i]);
+            }
+            const data = {entreearr: entreearr};
+            res.render('plate', data);
+            console.log(entreearr.length);
+            for(let i=0;i< entreearr.length;i++){
+                router.post('/order/plate/entree/'+i, (req, res) => {
+                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].category+": "+ entreearr[i].item], (err, result) => {
+                        if (err) throw err;
+                    })
+                })
+            }
+        });
+});
+
+router.get('/order',  (req, res) => {
+    bowllist = []
+    platelist = []
+    bigplatelist = []
+    pool.query("SELECT price FROM inventory WHERE item = 'bowl'")
+        .then(query_res => {
+            for(let i = 0; i < query_res.rowCount; ++i) {
+                bowllist.push(query_res.rows[i]);
+            }
+            const data = {bowllist: bowllist};
+            console.log(bowllist);
+            pool.query("SELECT price FROM inventory WHERE item = 'plate'")
+            .then(query_res => {
+                for(let i = 0; i < query_res.rowCount; ++i) {
+                    platelist.push(query_res.rows[i]);
+                }
+                const data2 = {platelist: platelist};
+                console.log(platelist);
+            });
+            pool.query("SELECT price FROM inventory WHERE item = 'biggerplate'")
+            .then(query_res => {
+                for(let i = 0; i < query_res.rowCount; ++i) {
+                    bigplatelist.push(query_res.rows[i]);
+                }
+                const data3 = {bigplatelist: bigplatelist};
+                console.log(bigplatelist);
+                res.render('order', data3);
+            });
+        });
+        
+});
+            //const data = {orderarr: orderarr};
+            //res.render('order', data);
+            
+            //for(let i=1;i<= orderarr.length;i++){
+                //router.post('/order/'+i, (req, res) => {
+                    //pool.query("INSERT INTO currentorders VALUES ($1,$2)",[orderarr[i].item, orderarr[i].price], (err, result) => {
+                        //if (err) throw err;
+                       // console.log(i);
+                   // })
+                //})
+            //}
+        //});
+//});
+router.post('/order/bowl', (req, res) => {
+    var bowl_price
+    pool.query("SELECT price FROM inventory WHERE item = 'bowl'", (err, result) => {
+            if (err) throw err;
+            bowl_price = result.rows[0].price;
+            pool.query("INSERT INTO currentorders VALUES ($1,$2)",["Bowl: ", bowl_price], (err, result) => {
+                if (err) throw err;
+               // console.log(i);
+           // })
+        })
+    })
+    res.redirect('/servers/order/bowl')
+});
+router.post('/order/plate', (req, res) => {
+    var plate_price
+    pool.query("SELECT price FROM inventory WHERE item = 'plate'", (err, result) => {
+            if (err) throw err;
+            plate_price = result.rows[0].price;
+            pool.query("INSERT INTO currentorders VALUES ($1,$2)",["Plate: ", plate_price], (err, result) => {
+                if (err) throw err;
+               // console.log(i);
+           // })
+        })
+    })
+    res.redirect('/servers/order/plate')
+});
+router.post('/order/biggerplate', (req, res) => {
+    var plate_price
+    pool.query("SELECT price FROM inventory WHERE item = 'biggerplate'", (err, result) => {
+            if (err) throw err;
+            plate_price = result.rows[0].price;
+            pool.query("INSERT INTO currentorders VALUES ($1,$2)",["Biggerplate: ", plate_price], (err, result) => {
+                if (err) throw err;
+               // console.log(i);
+           // })
+        })
+    })
+    res.redirect('/servers/order/biggerplate')
 });
 router.post('/order/reset', (req, res) => {
     pool.query("TRUNCATE TABLE currentorders")
