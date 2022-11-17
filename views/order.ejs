@@ -8,6 +8,13 @@
         <form action = "/servers/order/reset" method = "POST"> 
             <input type = "submit" value = "reset orders"  class="btn btn-primary btn-block mb-2"/> 
         </form>
+        <div class="col-sm">
+            <a href="/servers/order/orderconfirm">
+                <button type="button" class="btn btn-primary btn-block mb-2">
+                    Sumbit order
+                </button>
+            </a>
+        </div>
         
         <div class="col-sm">
             <form action = "/servers/order/bowl" method = "POST"> 
@@ -17,12 +24,12 @@
 
     <div class="col-sm">
         <form action = "/servers/order/plate" method = "POST"> 
-            <input type = "submit" value = "Plate: $<%= platelist[0].price %>" class="btn btn-success">
+            <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
     </div>
 </form>
           <div class="col-sm">
             <form action = "/servers/order/biggerplate" method = "POST"> 
-                <input type = "submit" value = "Bigger plate: $<%= bigplatelist[0].price %>" class="btn btn-success">
+                <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
         </div>
     </form>
 
@@ -47,5 +54,6 @@
                 </button>
             </a>
         </div>
+    </div>
     </div>
 </div>

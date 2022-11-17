@@ -1,0 +1,26 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body text-center">
+        <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+          <script>
+            function translateDropdown() {
+              new google.translate.TranslateElement(
+                {pageLanguage: 'en'}, 'google_translate_id'
+              )
+            }
+          </script>
+        <div id="google_translate_id"></div>
+        <a href="/servers/order" class="btn btn-primary btn-block mb-2">Return</a>
+        <h4>The order is <%= total_order %> 
+            <br>  The total price is $<%= total_price %> </br>
+          <h4>
+
+        <div class="col-sm">
+            <form action = "/servers/order/confirm" method = "POST"> 
+                <input type = "text" id = "date" name = "date" value = "enter date: YYYY-MM-DD" required="required">
+                <input type = "submit" value = "Confirm order" >
+        </div>
+          
+    </div>
+</div>
+</div>

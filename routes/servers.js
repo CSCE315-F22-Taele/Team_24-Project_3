@@ -3,8 +3,10 @@ const { redirect } = require('express/lib/response');
 const router = express.Router();
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
+const bodyParser = require('body-parser');
 // Create express router
 const port = 3000;
+var moment = require('moment');  
 // Create pool
 const pool = new Pool({
     user: process.env.PSQL_USER,
@@ -39,7 +41,7 @@ router.get('/order/bowl', (req, res) => {
             console.log(entreearr.length);
             for(let i=0;i< entreearr.length;i++){
                 router.post('/order/bowl/entree/'+i, (req, res) => {
-                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].category+": "+ entreearr[i].item], (err, result) => {
+                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].item], (err, result) => {
                         if (err) throw err;
                     })
                 })
@@ -107,7 +109,7 @@ router.get('/order/biggerplate', (req, res) => {
             console.log(entreearr.length);
             for(let i=0;i< entreearr.length;i++){
                 router.post('/order/biggerplate/entree/'+i, (req, res) => {
-                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].category+": "+ entreearr[i].item], (err, result) => {
+                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].item], (err, result) => {
                         if (err) throw err;
                     })
                 })
@@ -128,7 +130,7 @@ router.get('/order/plate', (req, res) => {
             console.log(entreearr.length);
             for(let i=0;i< entreearr.length;i++){
                 router.post('/order/plate/entree/'+i, (req, res) => {
-                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].category+": "+ entreearr[i].item], (err, result) => {
+                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].item], (err, result) => {
                         if (err) throw err;
                     })
                 })
@@ -138,32 +140,15 @@ router.get('/order/plate', (req, res) => {
 
 router.get('/order',  (req, res) => {
     bowllist = []
-    platelist = []
-    bigplatelist = []
-    pool.query("SELECT price FROM inventory WHERE item = 'bowl'")
+
+    pool.query("SELECT price,item FROM inventory WHERE item = 'bowl' OR item = 'plate' OR item = 'biggerplate' Order by id ")
         .then(query_res => {
             for(let i = 0; i < query_res.rowCount; ++i) {
                 bowllist.push(query_res.rows[i]);
             }
             const data = {bowllist: bowllist};
             console.log(bowllist);
-            pool.query("SELECT price FROM inventory WHERE item = 'plate'")
-            .then(query_res => {
-                for(let i = 0; i < query_res.rowCount; ++i) {
-                    platelist.push(query_res.rows[i]);
-                }
-                const data2 = {platelist: platelist};
-                console.log(platelist);
-            });
-            pool.query("SELECT price FROM inventory WHERE item = 'biggerplate'")
-            .then(query_res => {
-                for(let i = 0; i < query_res.rowCount; ++i) {
-                    bigplatelist.push(query_res.rows[i]);
-                }
-                const data3 = {bigplatelist: bigplatelist};
-                console.log(bigplatelist);
-                res.render('order', data3);
-            });
+            res.render('order',data)
         });
         
 });
@@ -223,34 +208,6 @@ router.post('/order/reset', (req, res) => {
     pool.query("TRUNCATE TABLE currentorders")
 });
 
-router.post('/order/submito', (req, res) => {
-   //insert into itemized history
-   //some error in this
-   const mydate = new Date();
-
-   viewmyorder = []
-   pool
-       .query("SELECT * FROM currentorders")
-       .then(query_res => {
-           for (let i = 0; i < query_res.rowCount; i++){
-               viewmyorder.push(query_res.rows[i]);
-           }
-           const data = {viewmyorder: viewmyorder};
-           res.render('order', data);
-           
-           for(let i=1;i<= viewmyorder.length;i++){
-               router.post('/order/'+i, (req, res) => {
-                   pool.query("INSERT INTO itemizedhistory VALUES ($1,$2, $3)",[mydate, viewmyorder[i].item, viewmyorder[i].price], (err, result) => {
-                       if (err) throw err;
-                       console.log(i);
-                  })
-               })
-           }
-       });
-       pool.query("TRUNCATE TABLE currentorders")
-
-     
-});
 router.get('/restockreport', (req, res) => {
     restockreport = []
     pool
@@ -268,7 +225,7 @@ router.get('/restockreport', (req, res) => {
 router.get('/itemsales' , (req, res) => {
     itemsales = []
     pool
-        .query('SELECT * FROM itemizedhistory;')
+        .query('SELECT * FROM itemizedhistory Order by date;')
         .then(query_res => {
             for(let i = 0; i < query_res.rowCount; ++i) {
                 itemsales.push(query_res.rows[i]);
@@ -291,5 +248,39 @@ router.get('/orderslist' , (req, res) => {
             console.log(orderslist);
             res.render('orderslist', data);
         });
+});
+router.get('/order/orderconfirm', (req, res) => {
+    orderslist = []
+    var total_order = ''
+    var temp_price = 0.0
+    var total_price = 0.0
+    var fixprice = 0.0
+    pool.query('SELECT * FROM currentorders;')
+    .then(query_res => {
+        for(let i = 0; i < query_res.rowCount; ++i) {
+            orderslist.push(query_res.rows[i]);
+        }
+        for(let i = 0; i < orderslist.length; ++i){
+            total_order += orderslist[i].orderstaken + " "
+        }
+        for(let i = 0; i < orderslist.length; ++i){
+            if(orderslist[i].price != null){
+                temp_price =  parseFloat(orderslist[i].price)
+                total_price += temp_price
+            }
+        }
+        fixprice = total_price.toFixed(2)
+        res.render('orderconfirm',{total_order: total_order, total_price: fixprice});
+        router.post('/order/confirm', (req, res) => {
+            let{date} = req.body;
+            pool.query("INSERT INTO itemizedhistory (date,item,price) VALUES($1,$2,$3)",[moment(date).format("YYYY-MM-DD"),total_order,fixprice], (err, result) => {
+                console.log(moment(date).format("YYYY-MM-DD"))
+                if (err) throw err;
+            })
+            pool.query("TRUNCATE TABLE currentorders")
+            res.redirect('/servers/order')
+        })
+    });
+   
 });
 module.exports = router;

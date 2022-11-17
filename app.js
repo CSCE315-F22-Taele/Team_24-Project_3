@@ -84,6 +84,7 @@ app.use('/biggerplate',require('./routes/servers.js'));
 app.use('/plate',require('./routes/servers.js'));
 app.use('/sides',require('./routes/servers.js'));
 app.use('/entrees',require('./routes/servers.js'))
+app.use('/orderconfirm',require('./routes/servers.js'))
 
 
 app.listen(port, () => {
