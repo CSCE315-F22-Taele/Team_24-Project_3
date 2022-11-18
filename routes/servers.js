@@ -147,7 +147,6 @@ router.get('/order',  (req, res) => {
                 bowllist.push(query_res.rows[i]);
             }
             const data = {bowllist: bowllist};
-            console.log(bowllist);
             res.render('order',data)
         });
         
@@ -245,7 +244,6 @@ router.get('/orderslist' , (req, res) => {
                 orderslist.push(query_res.rows[i]);
             }
             const data = {orderslist: orderslist};
-            console.log(orderslist);
             res.render('orderslist', data);
         });
 });
@@ -270,17 +268,39 @@ router.get('/order/orderconfirm', (req, res) => {
             }
         }
         fixprice = total_price.toFixed(2)
+        console.log(total_order)
         res.render('orderconfirm',{total_order: total_order, total_price: fixprice});
-        router.post('/order/confirm', (req, res) => {
-            let{date} = req.body;
-            pool.query("INSERT INTO itemizedhistory (date,item,price) VALUES($1,$2,$3)",[moment(date).format("YYYY-MM-DD"),total_order,fixprice], (err, result) => {
-                console.log(moment(date).format("YYYY-MM-DD"))
-                if (err) throw err;
-            })
-            pool.query("TRUNCATE TABLE currentorders")
-            res.redirect('/servers/order')
-        })
+        
     });
    
 });
+router.post('/order/confirm', (req, res) => {
+    orderslist = []
+    var total_order = ''
+    var temp_price = 0.0
+    var total_price = 0.0
+    var fixprice = 0.0
+    pool.query('SELECT * FROM currentorders;', (err, res) => {
+        for(let i = 0; i < res.rowCount; ++i) {
+            orderslist.push(res.rows[i]);
+        }
+        for(let i = 0; i < orderslist.length; ++i){
+            total_order += orderslist[i].orderstaken + " "
+        }
+        for(let i = 0; i < orderslist.length; ++i){
+            if(orderslist[i].price != null){
+                temp_price =  parseFloat(orderslist[i].price)
+                total_price += temp_price
+            }
+        }
+        fixprice = total_price.toFixed(2)
+        let{date} = req.body;
+    pool.query("INSERT INTO itemizedhistory (date,item,price) VALUES($1,$2,$3)",[moment(date).format("YYYY-MM-DD"),total_order,fixprice], (err, result) => {
+        console.log(total_order)
+        if (err) throw err;
+    })
+    pool.query("TRUNCATE TABLE currentorders")
+    })
+    res.redirect('/servers/order')
+})
 module.exports = router;
