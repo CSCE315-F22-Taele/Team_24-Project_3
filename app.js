@@ -53,8 +53,8 @@ app.get('/auth/google/callback',
 app.use('/',require('./routes/index.js'));
 
 //CUSTOMERS 
-app.use('/customers',require('./routes/customers.js'));
-app.use('/locations',require('./routes/customers.js'));
+app.use('/customers',require('./routes/customerview.js'));
+app.use('/locations',require('./routes/customerview.js'));
 
 
 //MANAGERS
