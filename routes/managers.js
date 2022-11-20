@@ -66,14 +66,15 @@ router.get('/saleshistory', (req, res) => {
         .query('SELECT * FROM saleshistory order by date;')
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++) {
-                let stringRep = JSON.stringify(query_res.rows[i].date).substring(1,11);
-                // console.log("Test : " + stringRep);
-                let newObj = {
-                    "date" : stringRep,
-                    "netsales" : query_res.rows[i].netsales,
-                    "numorders" : query_res.rows[i].numorders
-                }
-                saleshistory.push(newObj);
+                // let stringRep = JSON.stringify(query_res.rows[i].date).substring(1,11);
+                // // console.log("Test : " + stringRep);
+                // let newObj = {
+                //     "date" : stringRep,
+                //     "netsales" : query_res.rows[i].netsales,
+                //     "numorders" : query_res.rows[i].numorders
+                // }
+                query_res.rows[i].date = JSON.stringify(query_res.rows[i].date).substring(1,11);
+                saleshistory.push(query_res.rows[i]);
             }
             const data = {saleshistory: saleshistory};
             console.log(saleshistory);
