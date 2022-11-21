@@ -86,6 +86,17 @@ app.use('/sides',require('./routes/servers.js'));
 app.use('/entrees',require('./routes/servers.js'))
 app.use('/orderconfirm',require('./routes/servers.js'))
 
+//CUSTOMER ORDER BUTTON ROUTES 
+app.use('/bowlC',require('./routes/customerview.js'));
+app.use('/drinksC',require('./routes/customerview.js'));
+app.use('/biggerplateC',require('./routes/customerview.js'));
+app.use('/plateC',require('./routes/customerview.js'));
+app.use('/sidesC',require('./routes/customerview.js'));
+app.use('/entreesC',require('./routes/customerview.js'))
+app.use('/orderconfirmC',require('./routes/customerview.js'))
+app.use('/orderslistC',require('./routes/customerview.js'));
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
