@@ -1,0 +1,52 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body text-center">
+        <div id="google_translate_id"></div>
+        <a href="/customers/customers" class="btn btn-primary btn-block mb-2">Return</a>
+        <a href="/customers/orderslistC" class="btn btn-primary btn-block mb-2"
+        >View Current Order</a>
+        <form action = "/customers/orderC/reset" method = "POST"> 
+            <input type = "submit" value = "reset orders"  class="btn btn-primary btn-block mb-2"/> 
+        </form>
+        <div class="col-sm">
+            <a href="/customers/orderC/orderconfirmC">
+                <button type="button" class="btn btn-primary btn-block mb-2">
+                    Submit order
+                </button>
+            </a>
+        </div>
+        
+        <div class="col-sm">
+            <form action = "/customers/orderC/bowlC" method = "POST"> 
+                <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
+        </div>
+    </form>
+
+    <div class="col-sm">
+        <form action = "/customers/orderC/plateC" method = "POST"> 
+            <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
+    </div>
+</form>
+          <div class="col-sm">
+            <form action = "/customers/orderC/biggerplateC" method = "POST"> 
+                <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
+        </div>
+    </form>
+
+        <div class="col-sm">
+            <a href="/customers/orderC/sidesC">
+                <button type="button" class="btn btn-success">
+                    Sides
+                </button>
+            </a>
+        </div>
+        <div class="col-sm">
+            <a href="/customers/orderC/entreesC">
+                <button type="button" class="btn btn-success">
+                    Entrees
+                </button>
+            </a>
+        </div>
+    </div>
+    </div>
+</div>
