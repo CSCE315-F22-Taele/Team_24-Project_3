@@ -4,6 +4,14 @@
 
 
 <div><a href="/" class="btn btn-primary btn-block mb-2">Return</a></div>
+<script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+<script>
+  function translateDropdown() {
+    new google.translate.TranslateElement(
+      {pageLanguage: 'en'}, 'google_translate_id'
+    )
+  }
+</script>
 <div id="google_translate_id"></div>
 <h1>Manager Login</h1>
       <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google"></span> Sign In with Google</a>

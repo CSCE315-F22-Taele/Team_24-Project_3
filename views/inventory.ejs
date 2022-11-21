@@ -3,7 +3,16 @@
       <div class="card card-body text-center">
 
 <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
+<script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+<script>
+  function translateDropdown() {
+    new google.translate.TranslateElement(
+      {pageLanguage: 'en'}, 'google_translate_id'
+    )
+  }
+</script>
 <div id="google_translate_id"></div>
+
 
 <form action = "/managers/inventory" method = "POST"> 
   <div class="col-sm">
