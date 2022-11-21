@@ -227,6 +227,7 @@ router.get('/itemsales' , (req, res) => {
         .query('SELECT * FROM itemizedhistory Order by date;')
         .then(query_res => {
             for(let i = 0; i < query_res.rowCount; ++i) {
+                query_res.rows[i].date = JSON.stringify(query_res.rows[i].date).substring(1,11);
                 itemsales.push(query_res.rows[i]);
             }
             const data = {itemsales: itemsales};
