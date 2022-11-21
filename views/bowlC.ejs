@@ -1,0 +1,23 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body text-center">
+        <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+          <script>
+            function translateDropdown() {
+              new google.translate.TranslateElement(
+                {pageLanguage: 'en'}, 'google_translate_id'
+              )
+            }
+          </script>
+        <div id="google_translate_id"></div>
+        <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
+        <h1>Bowl: Choose 1 Entree & 1 Side!</h1>
+        <% for (var i =0; i < entreearr.length;  i++ ) { %>
+          <form action = "/customers/orderC/bowlC/entree/<%= i %>" method = "POST"> 
+          <div class="row">
+                  <input type = "submit" value ="<%= entreearr[i].category %>: <%= entreearr[i].item %> " />
+                 </form>
+              <% } %>
+              </div>
+            </div>
+          </div>
