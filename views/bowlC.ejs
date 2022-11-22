@@ -9,8 +9,20 @@
             )
           }
         </script>
-        <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
+         <form action = "/customers/orderC/bowlC/return" method = "POST"> 
+          <div class="row">
+            <input type = "submit" value ="Return" class="btn btn-primary btn-block mb-2"  />
+           </form>
         <h1>Bowl: Choose 1 Entree & 1 Side!</h1>
+        <ul>
+          <div class="col-sm">
+            <div class="text-danger">
+          <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+          <li><%= error.message %></li>
+          <% }) %> <% } %>
+        </div>
+        </div>
+        </ul>
         <% for (var i =0; i < entreearr.length;  i++ ) { %>
           <form action = "/customers/orderC/bowlC/entree/<%= i %>" method = "POST"> 
           <div class="row">

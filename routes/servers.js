@@ -31,6 +31,10 @@ router.get('/servers', (req, res) => {
 //ORDER BUTTONS 
 router.get('/order/bowl', (req, res) => {
     entreearr = []
+    entreelength =[]
+    var entree_count = 0;
+    var sides_count = 0;
+    let errors = [];
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
@@ -39,21 +43,53 @@ router.get('/order/bowl', (req, res) => {
             }
             const data = {entreearr: entreearr};
             res.render('bowl', data);
-            console.log(entreearr.length);
-            for(let i=0;i< entreearr.length;i++){
-                router.post('/order/bowl/entree/'+i, (req, res) => {
-                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].item], (err, result) => {
-                        if (err) throw err;
-                    })
+            pool.query("SELECT item,price,category FROM inventory WHERE category = 'entree'")
+            .then(query_res => {
+                for (let k = 0; k < query_res.rowCount; k++){
+                    entreelength.push(query_res.rows[k]);
+                }
+                router.post('/order/bowl/return/', (req, res) => {
+                    res.redirect('/servers/order')
+                    entree_count =0;
+                    sides_count = 0;
                 })
-            }
+            for(let j=0;j< entreearr.length;j++){
+                router.post('/order/bowl/entree/'+j, (req, res) => {
+           
+                        console.log(entree_count)
+                        if((j<entreelength.length && entree_count>=1)||(j>=entreelength.length && sides_count>=1)){
+                            if((j<entreelength.length && entree_count==1)){
+                                errors.push({message : "You can only choose at maximum 1 entree for a bowl!"});
+                            }
+                            if((j>=entreelength.length && sides_count==1)){
+                                errors.push({message : "You can only choose at maximum 1 side for a bowl!"});
+                            }
+                            if(errors.length > 0) {
+                                res.render('bowl', {errors});
+                                errors = []
+                            }
+                        }
+                        else{ 
+                            pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[j].item], (err, result) => {
+                            if (err) throw err;
+                        })
+                        if((j<entreelength.length && entree_count<1)){
+                            entree_count++;
+                        }
+                        if((j>=entreelength.length && sides_count<1)){
+                            sides_count++;
+                        }
+                    }
+                    });
+                   
+        }})
         });
+
 });
 
 
-router.get('/order/drinks', (req, res) => {
-    res.render('drinks');
-});
+
+
 
 router.get('/order/entrees', (req, res) => {
     entreearr = []
@@ -99,6 +135,10 @@ router.get('/order/sides', (req, res) => {
 
 router.get('/order/biggerplate', (req, res) => {
     entreearr = []
+    entreelength =[]
+    var entree_count = 0;
+    var sides_count = 0;
+    let errors = [];
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
@@ -107,19 +147,56 @@ router.get('/order/biggerplate', (req, res) => {
             }
             const data = {entreearr: entreearr};
             res.render('biggerplate', data);
-            console.log(entreearr.length);
-            for(let i=0;i< entreearr.length;i++){
-                router.post('/order/biggerplate/entree/'+i, (req, res) => {
-                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].item], (err, result) => {
-                        if (err) throw err;
-                    })
+            pool.query("SELECT item,price,category FROM inventory WHERE category = 'entree'")
+            .then(query_res => {
+                for (let k = 0; k < query_res.rowCount; k++){
+                    entreelength.push(query_res.rows[k]);
+                }
+                router.post('/order/biggerplate/return/', (req, res) => {
+                    res.redirect('/servers/order')
+                    entree_count =0;
+                    sides_count = 0;
                 })
-            }
+            for(let j=0;j< entreearr.length;j++){
+                router.post('/order/biggerplate/entree/'+j, (req, res) => {
+           
+                        console.log(entree_count)
+                        if((j<entreelength.length && entree_count>=3)||(j>=entreelength.length && sides_count>=1)){
+                            if((j<entreelength.length && entree_count==3)){
+                                errors.push({message : "You can only choose at maximum 3 entrees for a biggerplate!"});
+                            }
+                            if((j>=entreelength.length && sides_count==1)){
+                                errors.push({message : "You can only choose at maximum 1 side for a biggerplate!"});
+                            }
+                            if(errors.length > 0) {
+                                res.render('biggerplate', {errors});
+                                errors = []
+                            }
+                        }
+                        else{ 
+                            pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[j].item], (err, result) => {
+                            if (err) throw err;
+                        })
+                        if((j<entreelength.length && entree_count<3)){
+                            entree_count++;
+                        }
+                        if((j>=entreelength.length && sides_count<1)){
+                            sides_count++;
+                        }
+                    }
+                    });
+                   
+        }})
         });
+
 });
 
 router.get('/order/plate', (req, res) => {
     entreearr = []
+    entreelength =[]
+    var entree_count = 0;
+    var sides_count = 0;
+    let errors = [];
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
@@ -128,15 +205,48 @@ router.get('/order/plate', (req, res) => {
             }
             const data = {entreearr: entreearr};
             res.render('plate', data);
-            console.log(entreearr.length);
-            for(let i=0;i< entreearr.length;i++){
-                router.post('/order/plate/entree/'+i, (req, res) => {
-                    pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[i].item], (err, result) => {
-                        if (err) throw err;
-                    })
+            pool.query("SELECT item,price,category FROM inventory WHERE category = 'entree'")
+            .then(query_res => {
+                for (let k = 0; k < query_res.rowCount; k++){
+                    entreelength.push(query_res.rows[k]);
+                }
+                router.post('/order/plate/return/', (req, res) => {
+                    res.redirect('/servers/order')
+                    entree_count =0;
+                    sides_count = 0;
                 })
-            }
+            for(let j=0;j< entreearr.length;j++){
+                router.post('/order/plate/entree/'+j, (req, res) => {
+           
+                        console.log(entree_count)
+                        if((j<entreelength.length && entree_count>=2)||(j>=entreelength.length && sides_count>=1)){
+                            if((j<entreelength.length && entree_count==2)){
+                                errors.push({message : "You can only choose at maximum 2 entrees for a plate!"});
+                            }
+                            if((j>=entreelength.length && sides_count==1)){
+                                errors.push({message : "You can only choose at maximum 1 side for a plate!"});
+                            }
+                            if(errors.length > 0) {
+                                res.render('plate', {errors});
+                                errors = []
+                            }
+                        }
+                        else{ 
+                            pool.query("INSERT INTO currentorders VALUES ($1,NULL)",[entreearr[j].item], (err, result) => {
+                            if (err) throw err;
+                        })
+                        if((j<entreelength.length && entree_count<2)){
+                            entree_count++;
+                        }
+                        if((j>=entreelength.length && sides_count<1)){
+                            sides_count++;
+                        }
+                    }
+                    });
+                   
+        }})
         });
+
 });
 
 router.get('/order',  (req, res) => {

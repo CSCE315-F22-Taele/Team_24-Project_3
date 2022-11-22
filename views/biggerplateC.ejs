@@ -11,9 +11,20 @@
           }
         </script>
         <div id="google_translate_id"></div>
-      
-        <button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button>
+        <form action = "/customers/orderC/biggerplateC/return" method = "POST"> 
+          <div class="row">
+            <input type = "submit" value ="Return" class="btn btn-primary btn-block mb-2"  />
+           </form>
         <h1>Bigger Plate: Choose 3 Entrees & 1 Side!</h1>
+        <ul>
+          <div class="col-sm">
+            <div class="text-danger">
+          <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+          <li><%= error.message %></li>
+          <% }) %> <% } %>
+        </div>
+        </div>
+        </ul>
         <% for (var i =0; i < entreearr.length;  i++ ) { %>
           <form action = "/customers/orderC/biggerplateC/entree/<%= i %>" method = "POST"> 
           <div class="row">
