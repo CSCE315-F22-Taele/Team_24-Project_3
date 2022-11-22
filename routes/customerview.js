@@ -52,9 +52,22 @@ router.get('/orderC/bowlC', (req, res) => {
                     entreelength.push(query_res.rows[k]);
                 }
                 router.post('/orderC/bowlC/return/', (req, res) => {
-                    res.redirect('/customers/orderC')
+                    console.log(entree_count)
+                    if(entree_count <1 || sides_count <1){
+                        if(entree_count<1){
+                            errors.push({message : "please choose 1 entree"});
+                        }
+                        if(sides_count<1){
+                            errors.push({message : "please choose 1 side"});
+                        }
+                        if(errors.length > 0) {
+                            res.render('bowlC', {errors});
+                            errors = []
+                        }
+                    }
+                    else{res.redirect('/customers/orderC')
                     entree_count =0;
-                    sides_count = 0;
+                    sides_count = 0;}
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/orderC/bowlC/entree/'+j, (req, res) => {
@@ -157,9 +170,22 @@ router.get('/orderC/biggerplateC', (req, res) => {
                     entreelength.push(query_res.rows[k]);
                 }
                 router.post('/orderC/biggerplateC/return/', (req, res) => {
-                    res.redirect('/customers/orderC')
+                    console.log(entree_count)
+                    if(entree_count <3 || sides_count <1){
+                        if(entree_count<3){
+                            errors.push({message : "please choose 3 entrees"});
+                        }
+                        if(sides_count<1){
+                            errors.push({message : "please choose 1 side"});
+                        }
+                        if(errors.length > 0) {
+                            res.render('biggerplateC', {errors});
+                            errors = []
+                        }
+                    }
+                    else{res.redirect('/customers/orderC')
                     entree_count =0;
-                    sides_count = 0;
+                    sides_count = 0;}
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/orderC/biggerplateC/entree/'+j, (req, res) => {
@@ -215,9 +241,22 @@ router.get('/orderC/plateC', (req, res) => {
                     entreelength.push(query_res.rows[k]);
                 }
                 router.post('/orderC/plateC/return/', (req, res) => {
-                    res.redirect('/customers/orderC')
+                    console.log(entree_count)
+                    if(entree_count <2 || sides_count <1){
+                        if(entree_count<2){
+                            errors.push({message : "please choose 2 entrees"});
+                        }
+                        if(sides_count<1){
+                            errors.push({message : "please choose 1 side"});
+                        }
+                        if(errors.length > 0) {
+                            res.render('plateC', {errors});
+                            errors = []
+                        }
+                    }
+                    else{res.redirect('/customers/orderC')
                     entree_count =0;
-                    sides_count = 0;
+                    sides_count = 0;}
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/orderC/plateC/entree/'+j, (req, res) => {

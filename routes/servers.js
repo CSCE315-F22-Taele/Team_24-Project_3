@@ -49,14 +49,26 @@ router.get('/order/bowl', (req, res) => {
                     entreelength.push(query_res.rows[k]);
                 }
                 router.post('/order/bowl/return/', (req, res) => {
-                    res.redirect('/servers/order')
+                    console.log(entree_count)
+                    if(entree_count <1 || sides_count <1){
+                        if(entree_count<1){
+                            errors.push({message : "please choose 1 entree"});
+                        }
+                        if(sides_count<1){
+                            errors.push({message : "please choose 1 side"});
+                        }
+                        if(errors.length > 0) {
+                            res.render('bowl', {errors});
+                            errors = []
+                        }
+                    }
+                    else{res.redirect('/servers/order')
                     entree_count =0;
-                    sides_count = 0;
+                    sides_count = 0;}
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/order/bowl/entree/'+j, (req, res) => {
            
-                        console.log(entree_count)
                         if((j<entreelength.length && entree_count>=1)||(j>=entreelength.length && sides_count>=1)){
                             if((j<entreelength.length && entree_count==1)){
                                 errors.push({message : "You can only choose at maximum 1 entree for a bowl!"});
@@ -153,9 +165,22 @@ router.get('/order/biggerplate', (req, res) => {
                     entreelength.push(query_res.rows[k]);
                 }
                 router.post('/order/biggerplate/return/', (req, res) => {
-                    res.redirect('/servers/order')
+                    console.log(entree_count)
+                    if(entree_count <3 || sides_count <1){
+                        if(entree_count<3){
+                            errors.push({message : "please choose 3 entrees"});
+                        }
+                        if(sides_count<1){
+                            errors.push({message : "please choose 1 side"});
+                        }
+                        if(errors.length > 0) {
+                            res.render('biggerplate', {errors});
+                            errors = []
+                        }
+                    }
+                    else{res.redirect('/servers/order')
                     entree_count =0;
-                    sides_count = 0;
+                    sides_count = 0;}
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/order/biggerplate/entree/'+j, (req, res) => {
@@ -211,9 +236,22 @@ router.get('/order/plate', (req, res) => {
                     entreelength.push(query_res.rows[k]);
                 }
                 router.post('/order/plate/return/', (req, res) => {
-                    res.redirect('/servers/order')
+                    console.log(entree_count)
+                    if(entree_count <2 || sides_count <1){
+                        if(entree_count<2){
+                            errors.push({message : "please choose 2 entrees"});
+                        }
+                        if(sides_count<1){
+                            errors.push({message : "please choose 1 side"});
+                        }
+                        if(errors.length > 0) {
+                            res.render('plate', {errors});
+                            errors = []
+                        }
+                    }
+                    else{res.redirect('/servers/order')
                     entree_count =0;
-                    sides_count = 0;
+                    sides_count = 0;}
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/order/plate/entree/'+j, (req, res) => {
