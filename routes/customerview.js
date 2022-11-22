@@ -91,7 +91,7 @@ router.get('/orderC/sidesC', (req, res) => {
           res.render('sidesC', data);
           console.log(entreearr.length);
           for(let i=0;i< entreearr.length;i++){
-              router.post('/orderC/sides/entree/'+i, (req, res) => {
+              router.post('/orderC/sidesC/entree/'+i, (req, res) => {
                   pool.query("INSERT INTO currentorders VALUES ($1,$2)",[entreearr[i].item,entreearr[i].price], (err, result) => {
                       if (err) throw err;
                   })
