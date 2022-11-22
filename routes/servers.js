@@ -1,6 +1,7 @@
 const express = require('express');
 const { redirect } = require('express/lib/response');
 const router = express.Router();
+// router.use(express.static("public"));
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
 const bodyParser = require('body-parser');
@@ -38,6 +39,7 @@ router.get('/order/bowl', (req, res) => {
             }
             const data = {entreearr: entreearr};
             res.render('bowl', data);
+            res.render(pandabowl.png);
             console.log(entreearr.length);
             for(let i=0;i< entreearr.length;i++){
                 router.post('/order/bowl/entree/'+i, (req, res) => {
