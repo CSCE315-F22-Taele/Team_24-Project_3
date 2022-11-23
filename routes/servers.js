@@ -50,7 +50,7 @@ router.get('/order/bowl', (req, res) => {
                 }
                 router.post('/order/bowl/return/', (req, res) => {
                     console.log(entree_count)
-                    if(entree_count <1 || sides_count <1){
+                    if((entree_count <1 && sides_count == 1 )|| (sides_count <1 && entree_count > 1)){
                         if(entree_count<1){
                             errors.push({message : "please choose 1 entree"});
                         }
@@ -166,7 +166,7 @@ router.get('/order/biggerplate', (req, res) => {
                 }
                 router.post('/order/biggerplate/return/', (req, res) => {
                     console.log(entree_count)
-                    if(entree_count <3 || sides_count <1){
+                    if((entree_count <3 && sides_count == 1)|| (sides_count <1 && entre_count == 3)){ 
                         if(entree_count<3){
                             errors.push({message : "please choose 3 entrees"});
                         }
@@ -237,7 +237,7 @@ router.get('/order/plate', (req, res) => {
                 }
                 router.post('/order/plate/return/', (req, res) => {
                     console.log(entree_count)
-                    if(entree_count <2 || sides_count <1){
+                    if((entree_count <2 && sides_count == 1)|| (sides_count <1 && entre_count == 2)){
                         if(entree_count<2){
                             errors.push({message : "please choose 2 entrees"});
                         }
