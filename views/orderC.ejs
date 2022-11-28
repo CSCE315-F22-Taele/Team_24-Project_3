@@ -30,38 +30,52 @@
             </a>
         </div>
         
-        <div class="col-sm">
-            <form action = "/customers/orderC/bowlC" method = "POST"> 
-                <img src="/pandabowl.png" class="img-thumbnail">
-                <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
-        </div>
-    </form>
+        <div class="container">
+            <div class="row g-5">
 
-    <div class="col-sm">
-        <form action = "/customers/orderC/plateC" method = "POST"> 
-            <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
-    </div>
-</form>
-          <div class="col-sm">
-            <form action = "/customers/orderC/biggerplateC" method = "POST"> 
-                <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
-        </div>
-    </form>
+                <div class="col-6">
+                    <form action = "/customers/orderC/bowlC" method = "POST"> 
+                        <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
+                        <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
+                    </form>
+                </div>
+        
+                <div class="col-6">
+                    <form action = "/customers/orderC/plateC" method = "POST"> 
+                        <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;">
+                        <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
+                    </form>
+                </div>
 
-        <div class="col-sm">
-            <a href="/customers/orderC/sidesC">
-                <button type="button" class="btn btn-success">
-                    Sides
-                </button>
-            </a>
+                <div class="col-6">
+                    <form action = "/customers/orderC/biggerplateC" method = "POST"> 
+                        <img src="/pandabiggerplate.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
+                        <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
+                    </form>
+                </div>
+        
+                <div class="col-6">
+                    <a href="/customers/orderC/sidesC">
+                        <img src="/sides.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
+                        <button type="button" class="btn btn-success">
+                            Sides
+                        </button>
+                    </a>
+                </div>
+
+                <div class="col-sm">
+                    <a href="/customers/orderC/entreesC">
+                        <img src="/entree.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
+                        <button type="button" class="btn btn-success">
+                            Entrees
+                        </button>
+                    </a>
+                </div>
+
+            </div>
+
         </div>
-        <div class="col-sm">
-            <a href="/customers/orderC/entreesC">
-                <button type="button" class="btn btn-success">
-                    Entrees
-                </button>
-            </a>
-        </div>
+
     </div>
-    </div>
+  </div>
 </div>

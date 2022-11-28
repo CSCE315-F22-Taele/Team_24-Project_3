@@ -4,7 +4,6 @@
       white-space: nowrap;
       padding-top: 20px;
     }
-
 </style>
   
 <div id="sameline">
@@ -17,22 +16,20 @@
     <div class="col-md-6 m-auto">
       <div class="card card-body text-center">
         <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
-            <script>
-                function translateDropdown() {
-                    new google.translate.TranslateElement(
-                    {pageLanguage: 'en'}, 'google_translate_id'
-                    )
-                }
-            </script>
+        <script>
+          function translateDropdown() {
+            new google.translate.TranslateElement(
+              {pageLanguage: 'en'}, 'google_translate_id'
+            )
+          }
+        </script>
         <div id="google_translate_id"></div>
-        
         <a href="/servers/servers" class="btn btn-primary btn-block mb-2">Return</a>
-        <a href="/servers/orderslist" class="btn btn-primary btn-block mb-2">View Current Order</a>
-        
+        <a href="/servers/orderslist" class="btn btn-primary btn-block mb-2"
+        >View Current Order</a>
         <form action = "/servers/order/reset" method = "POST"> 
             <input type = "submit" value = "reset orders"  class="btn btn-primary btn-block mb-2"/> 
         </form>
-       
         <div class="col-sm">
             <a href="/servers/order/orderconfirm">
                 <button type="button" class="btn btn-primary btn-block mb-2">
@@ -40,52 +37,38 @@
                 </button>
             </a>
         </div>
-        <div class="container">
-
-            <div class="row g-5">
-
-                <div class="col-6" id="bowl">
-                    <form action = "/servers/order/bowl" method = "POST">
-                        <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
-                        <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
-                    </form>
-                </div>
-
-                <div class="col-6" id="plate">
-                    <form action = "/servers/order/plate" method = "POST"> 
-                        <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;">
-                        <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
-                    </form>
-                </div>
-                
-                <div class="col-6" id="biggerplate">
-                    <form action = "/servers/order/biggerplate" method = "POST">
-                        <img src="/pandabiggerplate.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
-                        <input type = "submit" value = "Bigger Plate: $<%= bowllist[2].price %>" class="btn btn-success">
-                    </form>
-                </div>
         
-                <div class="col-6" id="sides">
-                    <a href="/servers/order/sides">
-                        <img src="/sides.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
-                        <button type="button" class="btn btn-success">
-                            Sides
-                        </button>
-                    </a>
-                </div>
-    
-                <div class="col-sm" id="entrees">
-                    <a href="/servers/order/entrees">
-                        <img src="/entree.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
-                        <button type="button" class="btn btn-success">
-                            Entrees
-                        </button>
-                    </a>
-                </div>
-            </div>
-    
-    
+        <div class="col-sm">
+            <form action = "/servers/order/bowl" method = "POST"> 
+                <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
         </div>
-      </div>
+    </form>
+
+    <div class="col-sm">
+        <form action = "/servers/order/plate" method = "POST"> 
+            <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
+    </div>
+</form>
+          <div class="col-sm">
+            <form action = "/servers/order/biggerplate" method = "POST"> 
+                <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
+        </div>
+    </form>
+
+        <div class="col-sm">
+            <a href="/servers/order/sides">
+                <button type="button" class="btn btn-success">
+                    Sides
+                </button>
+            </a>
+        </div>
+        <div class="col-sm">
+            <a href="/servers/order/entrees">
+                <button type="button" class="btn btn-success">
+                    Entrees
+                </button>
+            </a>
+        </div>
+    </div>
     </div>
 </div>
