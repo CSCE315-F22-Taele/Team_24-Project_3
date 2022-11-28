@@ -50,7 +50,11 @@ router.get('/order/bowl', (req, res) => {
                 }
                 router.post('/order/bowl/return/', (req, res) => {
                     console.log(entree_count)
-                    if(entree_count <1 || sides_count <1){
+                    if(entree_count == 0 && sides_count ==0){
+                        res.redirect('/servers/order')
+                        pool.query("DELETE FROM currentorders WHERE orderstaken = 'Bowl: ' ")
+                    }
+                    if((entree_count <1)|| (sides_count <1)){
                         if(entree_count<1){
                             errors.push({message : "please choose 1 entree"});
                         }
@@ -166,7 +170,7 @@ router.get('/order/biggerplate', (req, res) => {
                 }
                 router.post('/order/biggerplate/return/', (req, res) => {
                     console.log(entree_count)
-                    if(entree_count <3 || sides_count <1){
+                    if((entree_count <3 && sides_count == 1)|| (sides_count <1 && entree_count == 3)){ 
                         if(entree_count<3){
                             errors.push({message : "please choose 3 entrees"});
                         }
@@ -237,7 +241,7 @@ router.get('/order/plate', (req, res) => {
                 }
                 router.post('/order/plate/return/', (req, res) => {
                     console.log(entree_count)
-                    if(entree_count <2 || sides_count <1){
+                    if((entree_count <2 && sides_count == 1)|| (sides_count <1 && entree_count == 2)){
                         if(entree_count<2){
                             errors.push({message : "please choose 2 entrees"});
                         }
@@ -249,6 +253,7 @@ router.get('/order/plate', (req, res) => {
                             errors = []
                         }
                     }
+                   
                     else{res.redirect('/servers/order')
                     entree_count =0;
                     sides_count = 0;}
@@ -380,7 +385,6 @@ router.get('/itemsales' , (req, res) => {
                 itemsales.push(query_res.rows[i]);
             }
             const data = {itemsales: itemsales};
-            console.log(itemsales);
             res.render('itemsales', data);
         });
 });
@@ -453,4 +457,23 @@ router.post('/order/confirm', (req, res) => {
     })
     res.redirect('/servers/order')
 })
+
+
+router.post('/itemsales/date', (req, res) => {
+    itemsales = []
+    let{startdate,enddate} = req.body;
+    pool.query("SELECT * FROM itemizedhistory WHERE date BETWEEN $1 AND $2;", [moment(startdate).format("YYYY-MM-DD"),moment(enddate).format("YYYY-MM-DD")])
+    .then(query_res => {
+        for (let i = 0; i < query_res.rowCount; i++){
+            query_res.rows[i].date = JSON.stringify(query_res.rows[i].date).substring(1,11);
+            itemsales.push(query_res.rows[i]);
+        }
+        res.render('itemsalesdate',{itemsales: itemsales, start:startdate, end: enddate})
+        });
+    })
+router.get('/itemsales/itemsalesdate', (req, res) => {
+    res.render('itemsalesdate')
+})
+
+
 module.exports = router;

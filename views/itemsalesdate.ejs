@@ -1,0 +1,47 @@
+<style>
+    #sameline {
+      overflow: hidden;
+      white-space: nowrap;
+      padding-top: 20px;
+    }
+  </style>
+  
+ 
+<div id="sameline">
+    <a href="/">Main Menu</a><a> --> </a>
+    <a href="/servers/servers">Servers</a>
+    <a> --> Sales by Item</a>
+  </div>
+  
+  <div class="row mt-5">
+      <div class="col-md-6 m-auto">
+        <div class="card card-body text-center">
+  
+  <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
+  <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+  <script>
+    function translateDropdown() {
+      new google.translate.TranslateElement(
+        {pageLanguage: 'en'}, 'google_translate_id'
+      )
+    }
+  </script>
+  <div id="google_translate_id"></div>
+  <table>
+    <tr>
+       <th>date</th><th>item</th><th>price</th>
+    </tr>
+  <h4>Sales by item from <%= start %> to <%= end %></h4>
+    <% for (var i = 0; i < itemsales.length; i++) { %>
+     <tr>
+       <td><%= itemsales[i].date %></td>
+       <td><%= itemsales[i].item %></td>
+       <td><%= itemsales[i].price %></td>
+     </tr>    
+    <% } %>
+ </table>
+ 
+  </div>
+</div>
+</div>
+  
