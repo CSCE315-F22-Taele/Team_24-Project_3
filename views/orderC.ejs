@@ -19,27 +19,26 @@
         <a href="/customers/customers" class="btn btn-primary btn-block mb-2">Return</a>
         <a href="/customers/orderslistC" class="btn btn-primary btn-block mb-2"
         >View Current Order</a>
+        <div class="float-left">
         <form action = "/customers/orderC/reset" method = "POST"> 
             <input type = "submit" value = "reset orders"  class="btn btn-primary btn-block mb-2"/> 
         </form>
-        <div class="col-sm">
+        <div class="float-right">
             <a href="/customers/orderC/orderconfirmC">
                 <button type="button" class="btn btn-primary btn-block mb-2">
                     Submit order
                 </button>
             </a>
-        </div>
-        
+    </div>
         <div class="container">
             <div class="row g-5">
-
                 <div class="col-6">
                     <form action = "/customers/orderC/bowlC" method = "POST"> 
                         <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
                         <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
                     </form>
                 </div>
-        
+                
                 <div class="col-6">
                     <form action = "/customers/orderC/plateC" method = "POST"> 
                         <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;">
