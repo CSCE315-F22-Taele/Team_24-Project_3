@@ -1,52 +1,46 @@
-<style>
-  #sameline {
-    overflow: hidden;
-    white-space: nowrap;
-    padding-top: 20px;
-  }
-</style>
 
-<div id="sameline">
-  <a href="/">Main Menu</a><a> --> </a>
-  <a href="/servers/servers">Servers</a><a> --> </a>
-  <a href="/servers/order">Order</a>
-  <a> --> Bowl</a>
-</div>
+<body>
+  <div id="sameline">
+    <a href="/">Main Menu</a><a> --> </a>
+    <a href="/servers/servers">Servers</a><a> --> </a>
+    <a href="/servers/order">Order</a>
+    <a> --> Bowl</a>
+  </div>
 
-<div class="row mt-5">
+  <div class="row mt-5">
     <div class="col-md-6 m-auto">
       <div class="card card-body text-center">
-   
+        
         <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
         <script>
           function translateDropdown() {
             new google.translate.TranslateElement(
               {pageLanguage: 'en'}, 'google_translate_id'
-            )
-          }
-        </script>
-        <div id="google_translate_id"></div>
-        <form action = "/servers/order/bowl/return" method = "POST"> 
+              )
+            }
+          </script>
+          <div id="google_translate_id"></div>
+          <form action = "/servers/order/bowl/return" method = "POST"> 
           <div class="row">
             <input type = "submit" value ="Return" class="btn btn-primary btn-block mb-2"  />
            </form>
-        <h1>Bowl: Choose 1 Entree & 1 Side!</h1>
+           <h1>Bowl: Choose 1 Entree & 1 Side!</h1>
         <ul>
           <div class="col-sm">
             <div class="text-danger">
-          <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
-          <li><%= error.message %></li>
-          <% }) %> <% } %>
-        </div>
-        </div>
-        </ul>
-        <% for (var i =0; i < entreearr.length;  i++ ) { %>
-          <form action = "/servers/order/bowl/entree/<%= i %>" method = "POST"> 
-          <div class="row">
-                  <input type = "submit" value ="<%= entreearr[i].category %>: <%= entreearr[i].item %> " />
-                 </form>
-              <% } %>
+              <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+                <li><%= error.message %></li>
+                <% }) %> <% } %>
               </div>
             </div>
-          </div>
-
+          </ul>
+          <% for (var i =0; i < entreearr.length;  i++ ) { %>
+          <form action = "/servers/order/bowl/entree/<%= i %>" method = "POST"> 
+            <div class="row">
+              <input type = "submit" value ="<%= entreearr[i].category %>: <%= entreearr[i].item %> " />
+                 </form>
+                 <% } %>
+                </div>
+              </div>
+            </div>
+</body>
