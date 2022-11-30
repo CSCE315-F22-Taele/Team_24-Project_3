@@ -29,33 +29,35 @@
                     Submit order
                 </button>
             </a>
+            
+
     </div>
         <div class="container">
             <div class="row g-5">
                 <div class="col-6">
                     <form action = "/customers/orderC/bowlC" method = "POST"> 
-                        <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
+                        <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;" id ="img1"> 
                         <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
                     </form>
                 </div>
-                
+
                 <div class="col-6">
                     <form action = "/customers/orderC/plateC" method = "POST"> 
-                        <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;">
+                        <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;" id ="img2">
                         <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
                     </form>
                 </div>
 
                 <div class="col-6">
                     <form action = "/customers/orderC/biggerplateC" method = "POST"> 
-                        <img src="/pandabiggerplate.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
+                        <img src="/pandabiggerplate.png" class="img-thumbnail" style="margin-bottom: 7px;"id ="img3"> 
                         <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
                     </form>
                 </div>
         
                 <div class="col-6">
                     <a href="/customers/orderC/sidesC">
-                        <img src="/sides.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
+                        <img src="/sides.png" class="img-thumbnail" style="margin-bottom: 7px;"id ="img4"> 
                         <button type="button" class="btn btn-success">
                             Sides
                         </button>
