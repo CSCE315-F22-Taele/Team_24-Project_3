@@ -56,9 +56,11 @@ router.get('/order/bowl', (req, res) => {
                             errors = []
                         }
                     }
-                    else{res.redirect('/servers/order')
-                    entree_count =0;
-                    sides_count = 0;}
+                    else{
+                        res.redirect('/servers/order')
+                        entree_count = 0;
+                        sides_count = 0;
+                    }
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/order/bowl/entree/'+j, (req, res) => {
@@ -166,9 +168,11 @@ router.get('/order/biggerplate', (req, res) => {
                             errors = []
                         }
                     }
-                    else{res.redirect('/servers/order')
-                    entree_count =0;
-                    sides_count = 0;}
+                    else{
+                        res.redirect('/servers/order')
+                        entree_count = 0;
+                        sides_count = 0;
+                    }
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/order/biggerplate/entree/'+j, (req, res) => {
@@ -230,11 +234,12 @@ router.get('/order/plate', (req, res) => {
                             res.render('plate', {errors});
                             errors = []
                         }
+                    }   
+                   else{
+                        res.redirect('/servers/order')
+                        entree_count = 0;
+                        sides_count = 0;
                     }
-                   
-                    else{res.redirect('/servers/order')
-                    entree_count =0;
-                    sides_count = 0;}
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/order/plate/entree/'+j, (req, res) => {
