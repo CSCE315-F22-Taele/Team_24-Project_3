@@ -4,6 +4,9 @@
     white-space: nowrap;
     padding-top: 20px;
   }
+  .btn btn-danger {
+    margin-bottom: 10px;
+  }
 </style>
 
 <div id="sameline">
@@ -17,6 +20,21 @@
 
 
 <div><a href="/" class="btn btn-primary btn-block mb-2">Return</a></div>
+
+<h1>Manager Login</h1>
+      <a href="/auth/google" class="btn btn-danger" style="margin-bottom: 10px;"><span class="fa fa-google"></span> Sign In with Google</a>
+<form action = "/managerlogin/managerlogin" method = "POST"> 
+    <div class="col-sm">
+    <input type = "text" id = "username" name="username" placeholder="Username" required="required"/>
+    </div>  
+    <div class="col-sm">
+    <input type = "password" id = "password" name="password" placeholder="Password" required="required"/>
+    </div>
+    <div class="col-sm">
+        <input type = "submit" value = "Login"/>
+    </div>
+    
+</form>
 <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
 <script>
   function translateDropdown() {
@@ -26,19 +44,6 @@
   }
 </script>
 <div id="google_translate_id"></div>
-<h1>Manager Login</h1>
-      <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google"></span> Sign In with Google</a>
-<form action = "/managerlogin/managerlogin" method = "POST"> 
-    <div class="col-sm">
-    <input type = "text" id = "username" name="username" placeholder="Username" required="required"/>
-    </div>
-    <div class="col-sm">
-    <input type = "password" id = "password" name="password" placeholder="Password" required="required"/>
-    </div>
-    <div class="col-sm">
-        <input type = "submit" value = "Login"/>
-    </div>
-</form>
 <ul>
     <div class="col-sm">
       <div class="text-danger">
