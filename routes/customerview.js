@@ -59,9 +59,11 @@ router.get('/orderC/bowlC', (req, res) => {
                             errors = []
                         }
                     }
-                    else{res.redirect('/customers/orderC')
-                    entree_count =0;
-                    sides_count = 0;}
+                    else{
+                        res.redirect('/customers/orderC')
+                        entree_count = 0;
+                        sides_count = 0;
+                    }
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/orderC/bowlC/entree/'+j, (req, res) => {
@@ -171,9 +173,11 @@ router.get('/orderC/biggerplateC', (req, res) => {
                             errors = []
                         }
                     }
-                    else{res.redirect('/customers/orderC')
-                    entree_count =0;
-                    sides_count = 0;}
+                    else{
+                        res.redirect('/customers/orderC')
+                        entree_count = 0;
+                        sides_count = 0;
+                    }
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/orderC/biggerplateC/entree/'+j, (req, res) => {
@@ -242,9 +246,11 @@ router.get('/orderC/plateC', (req, res) => {
                             errors = []
                         }
                     }
-                    else{res.redirect('/customers/orderC')
-                    entree_count =0;
-                    sides_count = 0;}
+                    else{
+                        res.redirect('/customers/orderC')
+                        entree_count = 0;
+                        sides_count = 0;
+                    }
                 })
             for(let j=0;j< entreearr.length;j++){
                 router.post('/orderC/plateC/entree/'+j, (req, res) => {
@@ -353,11 +359,12 @@ router.get('/orderslistC' , (req, res) => {
   pool
       .query('SELECT * FROM currentorders;')
       .then(query_res => {
-          for(let i = 0; i < query_res.rowCount; ++i) {
-              orderslist.push(query_res.rows[i]);
-          }
-          const data = {orderslist: orderslist};
-          res.render('orderslistC', data);
+            for(let i = 0; i < query_res.rowCount; ++i) {
+                console.log(query_res.rows[i]);
+                orderslist.push(query_res.rows[i]);
+            }
+            const data = {orderslist: orderslist};
+            res.render('orderslistC', data);
       });
 });
 router.get('/orderC/orderconfirmC', (req, res) => {

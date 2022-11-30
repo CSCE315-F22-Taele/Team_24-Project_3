@@ -4,6 +4,9 @@
       white-space: nowrap;
       padding-top: 20px;
     }
+    .col-sm {
+        margin-bottom: 5px;
+    }
 </style>
   
 <div id="sameline">
@@ -23,13 +26,17 @@
             )
           }
         </script>
+
         <div id="google_translate_id"></div>
+
         <a href="/servers/servers" class="btn btn-primary btn-block mb-2">Return</a>
         <a href="/servers/orderslist" class="btn btn-primary btn-block mb-2"
         >View Current Order</a>
+
         <form action = "/servers/order/reset" method = "POST"> 
-            <input type = "submit" value = "reset orders"  class="btn btn-primary btn-block mb-2"/> 
+            <input type = "submit" value = "Reset order"  class="btn btn-primary btn-block mb-2"/> 
         </form>
+
         <div class="col-sm">
             <a href="/servers/order/orderconfirm">
                 <button type="button" class="btn btn-primary btn-block mb-2">
@@ -41,19 +48,20 @@
         <div class="col-sm">
             <form action = "/servers/order/bowl" method = "POST"> 
                 <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
+            </form>
         </div>
-    </form>
 
-    <div class="col-sm">
-        <form action = "/servers/order/plate" method = "POST"> 
-            <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
-    </div>
-</form>
-          <div class="col-sm">
+        <div class="col-sm">
+            <form action = "/servers/order/plate" method = "POST"> 
+                <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
+            </form>
+        </div>
+
+        <div class="col-sm">
             <form action = "/servers/order/biggerplate" method = "POST"> 
                 <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
+            </form>
         </div>
-    </form>
 
         <div class="col-sm">
             <a href="/servers/order/sides">
@@ -62,6 +70,7 @@
                 </button>
             </a>
         </div>
+
         <div class="col-sm">
             <a href="/servers/order/entrees">
                 <button type="button" class="btn btn-success">
@@ -70,5 +79,5 @@
             </a>
         </div>
     </div>
-    </div>
+  </div>
 </div>
