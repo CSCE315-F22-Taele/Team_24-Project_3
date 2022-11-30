@@ -67,7 +67,7 @@ app.use('/managers',require('./routes/managers.js'));
 //LOGIN
 app.use('/managerlogin', require('./routes/managerlogin.js'));
 app.use('/serverlogin', require('./routes/serverlogin.js'));
-app.get('/loginsuccess', (req, res) => res.render('loginsuccess'));
+app.get('/loginsuccess', (req, res) => res.render('loginsuccess',{user: userProfile}));
 app.get('/error', (req, res) => res.render('error'));
 
 //SERVERS
