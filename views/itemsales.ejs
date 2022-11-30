@@ -18,7 +18,7 @@
 
 <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
 <div id="google_translate_id"></div>
-<h4>Enter start date and end date to see the sales history in specific time window</h4>
+<h4>Enter the start and end date to see the sales history in a specific time window</h4>
 <div class="col-sm">
   <form action = "/servers/itemsales/date" method = "POST"> 
       <input type = "text" id = "startdate" name = "startdate" placeholder = "start date: YYYY-MM-DD" required="required">
@@ -28,7 +28,7 @@
 
 <table>
     <tr>
-       <th>date</th><th>item</th><th>price</th>
+       <th>Date</th><th>Item</th><th>Pxrice</th>
     </tr>
  
     <% for (var i = 0; i < itemsales.length; i++) { %>

@@ -342,7 +342,7 @@ router.post('/order/reset', (req, res) => {
 router.get('/restockreport', (req, res) => {
     restockreport = []
     pool
-        .query("SELECT id,item,category,quantity FROM inventory WHERE quantity<50 ORDER by id;")
+        .query("SELECT id,item,category,quantity FROM inventory WHERE quantity<50 ORDER BY quantity;")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 restockreport.push(query_res.rows[i]);
