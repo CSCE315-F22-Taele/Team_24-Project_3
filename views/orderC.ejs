@@ -1,18 +1,21 @@
 <style>
     #sameline {
-      overflow: hidden;
-      white-space: nowrap;
-      padding-top: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-top: 20px;
     }
     body  {
         background-image: linear-gradient(to bottom, rgba(78, 78, 78, 0.52), rgba(133, 67, 84, 0.73)),
                       url('/testbackground.jpg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-color: black;
-  }
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: black;
+    }
+    .btn.btn-primary.btn-block.mb-2 {
+        color: black;
+    }
 </style>
 
 <body></body>
@@ -47,28 +50,28 @@
             <div class="row g-5">
                 <div class="col-6">
                     <form action = "/customers/orderC/bowlC" method = "POST"> 
-                        <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;" id ="img1"> 
+                        <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;" id ="img1" alt="picture of a panda express bowl"> 
                         <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
                     </form>
                 </div>
 
                 <div class="col-6">
                     <form action = "/customers/orderC/plateC" method = "POST"> 
-                        <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;" id ="img2">
+                        <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;" id ="img2" alt="picture of a panda express plate">
                         <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
                     </form>
                 </div>
 
                 <div class="col-6">
                     <form action = "/customers/orderC/biggerplateC" method = "POST"> 
-                        <img src="/pandabiggerplate.png" class="img-thumbnail" style="margin-bottom: 7px;"id ="img3"> 
+                        <img src="/pandabiggerplate.png" class="img-thumbnail" style="margin-bottom: 7px;"id ="img3" alt="picture of a panda express bigger plate"> 
                         <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
                     </form>
                 </div>
         
                 <div class="col-6">
                     <a href="/customers/orderC/sidesC">
-                        <img src="/sides.png" class="img-thumbnail" style="margin-bottom: 7px;"id ="img4"> 
+                        <img src="/sides.png" class="img-thumbnail" style="margin-bottom: 7px;"id ="img4" alt="picture of a panda express side"> 
                         <button type="button" class="btn btn-success">
                             Sides
                         </button>
@@ -77,7 +80,7 @@
 
                 <div class="col-sm">
                     <a href="/customers/orderC/entreesC">
-                        <img src="/entree.png" class="img-thumbnail" style="margin-bottom: 7px;"> 
+                        <img src="/entree.png" class="img-thumbnail" style="margin-bottom: 7px;" alt="picture of a panda express entree"> 
                         <button type="button" class="btn btn-success">
                             Entrees
                         </button>
