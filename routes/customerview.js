@@ -30,6 +30,10 @@ router.get('/locations', (req, res) => {
     res.render('locations');
   });
 
+  router.get('/nutrition', (req, res) => {
+    res.render('nutrition');
+  });
+
 
 //orderC BUTTONS 
 router.get('/orderC/bowlC', (req, res) => {
