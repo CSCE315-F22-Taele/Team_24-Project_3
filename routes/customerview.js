@@ -426,9 +426,7 @@ router.post('/orderC/confirm', (req, res) => {
       if (err) throw err;
   })
 
-  let alert = require('alert'); 
-  alert("Order Successfully Submitted!!")
-  
+
   pool.query("TRUNCATE TABLE currentorders")
   })
   res.redirect('/customers/orderC')
