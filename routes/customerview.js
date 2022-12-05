@@ -425,7 +425,8 @@ router.post('/orderC/confirm', (req, res) => {
       console.log(total_order)
       if (err) throw err;
   })
-
+  let alert = require('alert'); 
+  alert("Order Successfully Submitted!!")
 
   pool.query("TRUNCATE TABLE currentorders")
   })
