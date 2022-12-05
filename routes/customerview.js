@@ -34,6 +34,9 @@ router.get('/locations', (req, res) => {
     res.render('nutrition');
   });
 
+  router.get('/submissionR', (req, res) => {
+    res.render('submissionR');
+  });
 
 //orderC BUTTONS 
 router.get('/orderC/bowlC', (req, res) => {
@@ -428,7 +431,7 @@ router.post('/orderC/confirm', (req, res) => {
 
   pool.query("TRUNCATE TABLE currentorders")
   })
-  res.redirect('/customers/orderC')
+  res.redirect('/submissionR/submissionR')
 })
 
 

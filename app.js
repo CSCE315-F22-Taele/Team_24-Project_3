@@ -96,6 +96,7 @@ app.use('/sidesC',require('./routes/customerview.js'));
 app.use('/entreesC',require('./routes/customerview.js'))
 app.use('/orderconfirmC',require('./routes/customerview.js'))
 app.use('/orderslistC',require('./routes/customerview.js'));
+app.use('/submissionR',require('./routes/customerview.js'));
 
 
 
