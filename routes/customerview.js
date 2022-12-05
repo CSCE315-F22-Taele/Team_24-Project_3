@@ -404,6 +404,8 @@ router.post('/orderC/confirm', (req, res) => {
   var temp_price = 0.0
   var total_price = 0.0
   var fixprice = 0.0
+  var customername = ''
+
   pool.query('SELECT * FROM currentorders;', (err, res) => {
       for(let i = 0; i < res.rowCount; ++i) {
           orderslist.push(res.rows[i]);
