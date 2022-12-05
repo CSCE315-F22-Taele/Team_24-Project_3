@@ -405,7 +405,7 @@ router.post('/orderC/confirm', (req, res) => {
   var total_price = 0.0
   var fixprice = 0.0
   var customername = ''
-
+  
   pool.query('SELECT * FROM currentorders;', (err, res) => {
       for(let i = 0; i < res.rowCount; ++i) {
           orderslist.push(res.rows[i]);
@@ -425,6 +425,10 @@ router.post('/orderC/confirm', (req, res) => {
       console.log(total_order)
       if (err) throw err;
   })
+
+  let alert = require('alert'); 
+  alert("Order Successfully Submitted!!")
+  
   pool.query("TRUNCATE TABLE currentorders")
   })
   res.redirect('/customers/orderC')
