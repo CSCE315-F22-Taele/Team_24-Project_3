@@ -417,6 +417,31 @@ router.post('/order/confirm', (req, res) => {
     var temp_price = 0.0
     var total_price = 0.0
     var fixprice = 0.0
+    let errors =[]
+    let{date} = req.body;
+    if(moment(date, 'YYYY-MM-DD',true).isValid() == false){
+      errors.push({message : "Please enter correct date format"});
+      pool.query('SELECT * FROM currentorders;')
+      .then(query_res => {
+          for(let i = 0; i < query_res.rowCount; ++i) {
+              orderslist.push(query_res.rows[i]);
+          }
+          for(let i = 0; i < orderslist.length; ++i){
+              total_order += orderslist[i].orderstaken + " "
+          }
+          for(let i = 0; i < orderslist.length; ++i){
+              if(orderslist[i].price != null){
+                  temp_price =  parseFloat(orderslist[i].price)
+                  total_price += temp_price
+              }
+          }
+          fixprice = total_price.toFixed(2)
+          res.render('orderconfirm',{total_order: total_order, total_price: fixprice, errors});
+          errors = []
+      });
+  }
+  else{
+    res.redirect('/servers/order')
     pool.query('SELECT * FROM currentorders;', (err, res) => {
         for(let i = 0; i < res.rowCount; ++i) {
             orderslist.push(res.rows[i]);
@@ -431,21 +456,29 @@ router.post('/order/confirm', (req, res) => {
             }
         }
         fixprice = total_price.toFixed(2)
-        let{date} = req.body;
-    pool.query("INSERT INTO itemizedhistory (date,item,price) VALUES($1,$2,$3)",[moment(date).format("YYYY-MM-DD"),total_order,fixprice], (err, result) => {
-        console.log(total_order)
-        if (err) throw err;
+  
+      pool.query("INSERT INTO itemizedhistory (date,item,price) VALUES($1,$2,$3)",[moment(date).format("YYYY-MM-DD"),total_order,fixprice], (err, result) => {
+          if (err) throw err;
+      })
+      pool.query("TRUNCATE TABLE currentorders")
+  
     })
-    pool.query("TRUNCATE TABLE currentorders")
-    })
-    res.redirect('/servers/order')
-})
+  }
+  
+  })
+  
 
 
 router.post('/itemsales/date', (req, res) => {
     itemsales = []
+    let errors =[]
     let{startdate,enddate} = req.body;
-    pool.query("SELECT * FROM itemizedhistory WHERE date BETWEEN $1 AND $2;", [moment(startdate).format("YYYY-MM-DD"),moment(enddate).format("YYYY-MM-DD")])
+    if(moment(startdate, 'YYYY-MM-DD',true).isValid() == false || moment(enddate, 'YYYY-MM-DD',true).isValid() == false ){
+        errors.push({message : "Please enter correct date format"});
+        res.render('itemsalesdate', {errors, start:startdate, end: enddate})
+    }
+    else{
+        pool.query("SELECT * FROM itemizedhistory WHERE date BETWEEN $1 AND $2;", [moment(startdate).format("YYYY-MM-DD"),moment(enddate).format("YYYY-MM-DD")])
     .then(query_res => {
         for (let i = 0; i < query_res.rowCount; i++){
             query_res.rows[i].date = JSON.stringify(query_res.rows[i].date).substring(1,11);
@@ -453,7 +486,9 @@ router.post('/itemsales/date', (req, res) => {
         }
         res.render('itemsalesdate',{itemsales: itemsales, start:startdate, end: enddate})
         });
+    }
     })
+
 router.get('/itemsales/itemsalesdate', (req, res) => {
     res.render('itemsalesdate')
 })

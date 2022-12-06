@@ -40,6 +40,15 @@
     }
   </script>
   <div id="google_translate_id"></div>
+  <ul>
+    <div class="col-sm">
+      <div class="text-danger">
+    <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+    <li><%= error.message %></li>
+    <% }) %> <% } %>
+  </div>
+  </div>
+  </ul>
   <table>
     <tr>
        <th>date</th><th>item</th><th>price</th>
