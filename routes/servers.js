@@ -473,9 +473,15 @@ router.post('/itemsales/date', (req, res) => {
     itemsales = []
     let errors =[]
     let{startdate,enddate} = req.body;
-    if(moment(startdate, 'YYYY-MM-DD',true).isValid() == false || moment(enddate, 'YYYY-MM-DD',true).isValid() == false ){
+    if(moment(startdate, 'YYYY-MM-DD',true).isValid() == false || moment(enddate, 'YYYY-MM-DD',true).isValid() == false  ){
         errors.push({message : "Please enter correct date format"});
+    }
+    if(moment(startdate).format("YYYY-MM-DD") > moment(enddate).format("YYYY-MM-DD")){
+        errors.push({message : "start date can not be later than the end date"});
+    }
+    if(errors.length>0){
         res.render('itemsalesdate', {errors, start:startdate, end: enddate})
+        errors=[]
     }
     else{
         pool.query("SELECT * FROM itemizedhistory WHERE date BETWEEN $1 AND $2;", [moment(startdate).format("YYYY-MM-DD"),moment(enddate).format("YYYY-MM-DD")])
