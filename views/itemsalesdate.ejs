@@ -1,69 +1,96 @@
 <style>
-    #sameline {
-      overflow: hidden;
-      white-space: nowrap;
-      padding-top: 20px;
-    }
-    body  {
-      background-image: linear-gradient(to bottom, rgba(78, 78, 78, 0.52), rgba(133, 67, 84, 0.73)),
-                      url('/testbackground.jpg');
+  #sameline {
+    overflow: hidden;
+    white-space: nowrap;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  a:link {
+    color: black;
+  }
+
+  a:visited {
+    color: black;
+  }
+
+  a:hover {
+    color: #e6ebe7;
+  }
+
+  body {
+    background-image: linear-gradient(to bottom, rgba(78, 78, 78, 0.52), rgba(133, 67, 84, 0.73)),
+      url('/testbackground.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-color: black;
   }
+
   .btn.btn-primary.btn-block.mb-2 {
-        color: black;
-    }
+    color: black;
+  }
 </style>
 
 <body></body>
- 
-<div id="sameline">
-    <a href="/">Main Menu</a><a> --> </a>
-    <a href="/servers/servers">Servers</a>
-    <a> --> Sales by Item</a>
-  </div>
-  
-  <div class="row mt-5">
-      <div class="col-md-6 m-auto">
-        <div class="card card-body text-center">
-  
-  <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
-  <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
-  <script>
-    function translateDropdown() {
-      new google.translate.TranslateElement(
-        {pageLanguage: 'en'}, 'google_translate_id'
-      )
-    }
-  </script>
-  <div id="google_translate_id"></div>
-  <ul>
-    <div class="col-sm">
-      <div class="text-danger">
-    <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
-    <li><%= error.message %></li>
-    <% }) %> <% } %>
-  </div>
-  </div>
-  </ul>
-  <table>
-    <tr>
-       <th>date</th><th>item</th><th>price</th>
-    </tr>
-  <h4>Sales by item from <%= start %> to <%= end %></h4>
-    <% for (var i = 0; i < itemsales.length; i++) { %>
-     <tr>
-       <td><%= itemsales[i].date %></td>
-       <td><%= itemsales[i].item %></td>
-       <td><%= itemsales[i].price %></td>
-     </tr>    
-    <% } %>
- </table>
- 
+
+<div id="sameline" class="btn btn-primary btn-block mb-1">
+  <a href="/">Main Menu</a><a> --> </a>
+  <a href="/servers/servers">Servers</a>
+  <a> --> Sales by Item</a>
+</div>
+
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body text-center">
+
+      <div><button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button></div>
+      <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+      <script>
+        function translateDropdown() {
+          new google.translate.TranslateElement(
+            { pageLanguage: 'en' }, 'google_translate_id'
+          )
+        }
+      </script>
+      <div id="google_translate_id"></div>
+      <ul>
+        <div class="col-sm">
+          <div class="text-danger">
+            <% if (typeof errors !='undefined' ) { %>
+              <% errors.forEach(error=> { %>
+                <li>
+                  <%= error.message %>
+                </li>
+                <% }) %>
+                  <% } %>
+          </div>
+        </div>
+      </ul>
+      <table>
+        <tr>
+          <th>date</th>
+          <th>item</th>
+          <th>price</th>
+        </tr>
+        <h4>Sales by item from <%= start %> to <%= end %>
+        </h4>
+        <% for (var i=0; i < itemsales.length; i++) { %>
+          <tr>
+            <td>
+              <%= itemsales[i].date %>
+            </td>
+            <td>
+              <%= itemsales[i].item %>
+            </td>
+            <td>
+              <%= itemsales[i].price %>
+            </td>
+          </tr>
+          <% } %>
+      </table>
+
+    </div>
   </div>
 </div>
-</div>
-  

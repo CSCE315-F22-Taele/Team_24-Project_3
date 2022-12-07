@@ -1,51 +1,64 @@
 <style>
-    #sameline {
-      overflow: hidden;
-      white-space: nowrap;
-      padding-top: 20px;
-    }
-    body  {
-      background-image: linear-gradient(to bottom, rgba(78, 78, 78, 0.52), rgba(133, 67, 84, 0.73)),
-                        url('/testbackground.jpg');
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-      background-color: black;
-    }
-    .btn.btn-primary.btn-block.mb-2 {
-          color: black;
-      }
-  </style>
-  
-  <body></body>
-  <div id="sameline">
-    <a href="/">Main Menu</a><a> --> </a>
-    <a href="/customers/customers">Customers</a>
-    <a href="/customers/orderC"> Order</a>
-    <a> --> Submission</a>
-  </div>
-  
-  <div class="row mt-5">
-      <div class="col-md-6 m-auto" style="width: 1000px;">
-          <div class="card card-body text-center">
-   
-            <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
-            <script>
-                function translateDropdown() {
-                    new google.translate.TranslateElement(
-                        {pageLanguage: 'en'}, 'google_translate_id'
-                    )
-                }
-            </script>
-            <div id="google_translate_id"></div>
-              
-              <h1>Order Submitted Successfully!!</h1>
-              <a href="/customers/customers" class="btn btn-primary btn-block mb-2">Return To Customer Page</a>
-              <a href="/customers/orderC" class="btn btn-primary btn-block mb-2">Make Another Order</a>
-              
+  #sameline {
+    overflow: hidden;
+    white-space: nowrap;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 
-              <img src="/happypanda.jpg" class="img-thumbnail" style="margin-bottom: 7px; height:40%" id ="img8" alt="happy panda">
-            
-             
-            
+  a:link {
+    color: black;
+  }
+
+  a:visited {
+    color: black;
+  }
+
+  a:hover {
+    color: #e6ebe7;
+  }
+
+  body {
+    background-image: linear-gradient(to bottom, rgba(78, 78, 78, 0.52), rgba(133, 67, 84, 0.73)),
+      url('/testbackground.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: black;
+  }
+
+  .btn.btn-primary.btn-block.mb-2 {
+    color: black;
+  }
+</style>
+
+<body></body>
+<div id="sameline" class="btn btn-primary btn-block mb-1">
+  <a href="/">Main Menu</a><a> --> </a>
+  <a href="/customers/customers">Customers</a><a> --> </a>
+  <a href="/customers/orderC">Order</a>
+  <a> --> Submission</a>
+</div>
+
+<div class="row mt-5">
+  <div class="col-md-6 m-auto" style="width: 1000px;">
+    <div class="card card-body text-center">
+
+      <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+      <script>
+        function translateDropdown() {
+          new google.translate.TranslateElement(
+            { pageLanguage: 'en' }, 'google_translate_id'
+          )
+        }
+      </script>
+      <div id="google_translate_id"></div>
+
+      <h1>Order Submitted Successfully!!</h1>
+      <a href="/customers/customers" class="btn btn-primary btn-block mb-2">Return To Customer Page</a>
+      <a href="/customers/orderC" class="btn btn-primary btn-block mb-2">Make Another Order</a>
+
+
+      <img src="/happypanda.jpg" class="img-thumbnail" style="margin-bottom: 7px; height:40%" id="img8"
+        alt="happy panda">
