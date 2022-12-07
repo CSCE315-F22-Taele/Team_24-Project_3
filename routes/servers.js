@@ -1,3 +1,7 @@
+/** Express router providing user related routes
+ * @module routes/servers
+ * @requires express, body-parser, pg
+ */
 const express = require('express');
 const { redirect } = require('express/lib/response');
 const router = express.Router();
@@ -23,12 +27,24 @@ process.on('SIGINT', function () {
     process.exit(0);
 });
 
-//SERVER BUTTON
+/**
+ * Route serving server's view.
+ * @name get/servers
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/servers', (req, res) => {
     res.render('servers');
 });
 
-//ORDER BUTTONS 
+/**
+ * Route serving server's ordering view for bowls.
+ * @name get/order/bowl
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/order/bowl', (req, res) => {
     entreearr = []
     var entree_count = 0;
@@ -96,9 +112,13 @@ router.get('/order/bowl', (req, res) => {
 });
 
 
-
-
-
+/**
+ * Route serving server's ordering view for entrees.
+ * @name get/order/entrees
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/order/entrees', (req, res) => {
     entreearr = []
     pool
@@ -120,6 +140,13 @@ router.get('/order/entrees', (req, res) => {
         });
 });
 
+/**
+ * Route serving server's ordering view for sides.
+ * @name get/order/sides
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/order/sides', (req, res) => {
     entreearr = []
     pool
@@ -141,6 +168,14 @@ router.get('/order/sides', (req, res) => {
         });
 });
 
+
+/**
+ * Route serving server's ordering view for bigger plates.
+ * @name get/order/biggerplate
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/order/biggerplate', (req, res) => {
     entreearr = []
     var entree_count = 0;
@@ -208,6 +243,14 @@ router.get('/order/biggerplate', (req, res) => {
 
 });
 
+
+/**
+ * Route serving server's ordering view for plates.
+ * @name get/order/plate
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/order/plate', (req, res) => {
     entreearr = []
     var entree_count = 0;
@@ -275,6 +318,13 @@ router.get('/order/plate', (req, res) => {
 
 });
 
+/**
+ * Route serving server's ordering view for all items.
+ * @name get/order
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/order', (req, res) => {
     bowllist = []
 
@@ -301,6 +351,14 @@ router.get('/order', (req, res) => {
 //}
 //});
 //});
+
+/**
+ * Route submitting server's bowl order.
+ * @name post/order/bowl
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/order/bowl', (req, res) => {
     var bowl_price
     pool.query("SELECT price FROM inventory WHERE item = 'bowl'", (err, result) => {
@@ -314,6 +372,14 @@ router.post('/order/bowl', (req, res) => {
     })
     res.redirect('/servers/order/bowl')
 });
+
+/**
+ * Route submitting server's plate order.
+ * @name post/order/plate
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/order/plate', (req, res) => {
     var plate_price
     pool.query("SELECT price FROM inventory WHERE item = 'plate'", (err, result) => {
@@ -327,6 +393,14 @@ router.post('/order/plate', (req, res) => {
     })
     res.redirect('/servers/order/plate')
 });
+
+/**
+ * Route submitting server's bigger plate order.
+ * @name post/order/biggerplate
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/order/biggerplate', (req, res) => {
     var plate_price
     pool.query("SELECT price FROM inventory WHERE item = 'biggerplate'", (err, result) => {
@@ -340,10 +414,25 @@ router.post('/order/biggerplate', (req, res) => {
     })
     res.redirect('/servers/order/biggerplate')
 });
+
+/**
+ * Route submitting server's order reset request.
+ * @name post/order/bowl
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/order/reset', (req, res) => {
     pool.query("TRUNCATE TABLE currentorders")
 });
 
+/**
+ * Route serving restock report view.
+ * @name get/restockreport
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/restockreport', (req, res) => {
     restockreport = []
     pool
@@ -358,6 +447,13 @@ router.get('/restockreport', (req, res) => {
         });
 });
 
+/**
+ * Route serving item saless view.
+ * @name get/itemsales
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/itemsales', (req, res) => {
     itemsales = []
     pool
@@ -372,6 +468,13 @@ router.get('/itemsales', (req, res) => {
         });
 });
 
+/**
+ * Route serving current order report view.
+ * @name get/orderslist
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/orderslist', (req, res) => {
     orderslist = []
     pool
@@ -384,6 +487,14 @@ router.get('/orderslist', (req, res) => {
             res.render('orderslist', data);
         });
 });
+
+/**
+ * Route serving server's order view
+ * @name get/order/orderconfirm
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/order/orderconfirm', (req, res) => {
     orderslist = []
     var total_order = ''
@@ -411,6 +522,14 @@ router.get('/order/orderconfirm', (req, res) => {
         });
 
 });
+
+/**
+ * Route submitting server's orders to database
+ * @name post/order/confirm
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/order/confirm', (req, res) => {
     orderslist = []
     var total_order = ''
@@ -468,7 +587,13 @@ router.post('/order/confirm', (req, res) => {
 })
 
 
-
+/**
+ * Route submitting item sales view with specified date
+ * @name get/restockreport
+ * @function
+ * @param {string} - server's provide a date to be queried
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/itemsales/date', (req, res) => {
     itemsales = []
     let errors = []
@@ -495,6 +620,13 @@ router.post('/itemsales/date', (req, res) => {
     }
 })
 
+/**
+ * Route item sales view with date
+ * @name get/itemsales/itemsalesdate
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/itemsales/itemsalesdate', (req, res) => {
     res.render('itemsalesdate')
 })

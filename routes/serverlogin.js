@@ -1,3 +1,8 @@
+/** Express router providing user related routes
+ * @module routes/serverlogin
+ * @requires express, body-parser, pg
+ */
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const { redirect } = require('express/lib/response');

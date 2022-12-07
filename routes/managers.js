@@ -1,3 +1,8 @@
+/** Express router providing user related routes
+ * @module routes/managers
+ * @requires express, body-parser, pg
+ */
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const { redirect } = require('express/lib/response');
@@ -22,6 +27,13 @@ process.on('SIGINT', function() {
     process.exit(0);
 });
 
+/**
+ * Route serving manager's view.
+ * @name get/managers
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/managers', (req, res) => {
     res.render('managers');
 });
@@ -62,6 +74,14 @@ router.post('/inventory', (req, res) => {
     })
   
 });
+
+/**
+ * Route submitting manager's request to change inventory prices of specified items and item additions
+ * @name post/inventory1
+ * @function
+ * @param {string, string, int} - manager provides item name, category of item, and the updated price
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/inventory1', (req, res) => {
     let{item,category,price} = req.body;
     var maxid;
@@ -92,7 +112,13 @@ router.post('/inventory1', (req, res) => {
     }
 });
 
-
+/**
+ * Route current inventory view
+ * @name get/inventory1
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/inventory', (req, res) => {
     inventory = []
     pool
@@ -106,6 +132,13 @@ router.get('/inventory', (req, res) => {
         });
 });
 
+/**
+ * Route current sales history view
+ * @name get/saleshistory
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/saleshistory', (req, res) => {
     saleshistory = []
     pool
@@ -128,6 +161,13 @@ router.get('/saleshistory', (req, res) => {
         });
 });
 
+/**
+ * Route current employee list view
+ * @name get/employeelist
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/employeelist' , (req, res) => {
     employeelist = []
     pool
@@ -142,6 +182,13 @@ router.get('/employeelist' , (req, res) => {
         });
 });
 
+/**
+ * Route current menu view
+ * @name get/menu
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/menu' , (req, res) => {
     menu = []
     pool
@@ -156,6 +203,13 @@ router.get('/menu' , (req, res) => {
         });
 });
 
+/**
+ * Route submitting manager's request to add menu items
+ * @name post/menu
+ * @function
+ * @param {int, float} - manager provides id of the item and updated price
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/menu', (req, res) => {
     let{id,price} = req.body;
     let errors = [];
@@ -197,6 +251,13 @@ router.post('/menu', (req, res) => {
     });  
 });
 
+/**
+ * Route submitting manager's request to add items from inventory's view
+ * @name post/menu1
+ * @function
+ * @param {int, string, float} - adds new item with required fields of id, name, and price to the database
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/menu1', (req, res) => {
     let{item,category,price} = req.body;
     var maxid;
