@@ -29,23 +29,69 @@ router.get('/managers', (req, res) => {
 router.post('/inventory', (req, res) => {
     let{id,quantity} = req.body;
     let errors =[];
-    if(parseInt(id)<0 || parseInt(quantity)<0){
-        errors.push({message: "Input cannot be negative, please try again"});
+    var maxid
+    pool
+    .query('SELECT id FROM inventory WHERE id=(SELECT max(id) FROM inventory);', (err, result) => {
+        pool.query('SELECT * FROM inventory order by id;')
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                inventory.push(query_res.rows[i]);
+            }
+            const data = {inventory: inventory};
+            maxid = result.rows[0].id;
+            if(parseInt(id)<0 || parseInt(quantity)<0){
+                errors.push({message: "Input cannot be negative, please try again"});
+            }
+            if(parseInt(id)>maxid){
+                errors.push({message: "Input id cannot bigger than the maximum id , please try again"});
+            }
+            if(errors.length>0) {
+                console.log(errors);
+                res.render('inventory', {errors,data});
+            }
+            else {
+                pool
+                    .query('UPDATE inventory SET quantity = $1 WHERE id = $2;',[quantity, id], (err, result) => {
+                        if (err) throw err;
+                        console.log(result.rows);
+                    })
+                    res.redirect('/managers/inventory');
+                }
+        });
+       
+    })
+  
+});
+router.post('/inventory1', (req, res) => {
+    let{item,category,price} = req.body;
+    var maxid;
+    let errors1 = [];
+    if(parseFloat(price) < 0) {
+        errors1.push({message : "Input can not be negative, please try again!"});
     }
-    if(errors.length>0) {
-        console.log(errors);
-        res.render('inventory', {errors,id,quantity});
-        console.log({id,quantity});
+    if(parseFloat(price) >= 100) {
+        errors1.push({message : "Input price cannot bigger than $99.99, please try again!"});
+    }
+    if(errors1.length > 0) {
+        console.log(errors1);
+        res.render('inventory', {errors1,category,price});
+        console.log({category,price});
     }
     else {
         pool
-            .query('UPDATE inventory SET quantity = $1 WHERE id = $2;',[quantity, id], (err, result) => {
-                if (err) throw err;
-                console.log(result.rows);
-            })
-            res.redirect('/managers/inventory');}
-        
+        .query('SELECT id FROM inventory WHERE id=(SELECT max(id) FROM inventory);', (err, result) => {
+            if (err) throw err;
+            maxid = result.rows[0].id;
+            console.log(maxid);
+            pool
+            .query('INSERT INTO inventory VALUES ($1,$2,$3,100,$4);',[maxid+1,item,category,price],(err, result) => {
+            if (err) throw err;
+        })
+        })
+            res.redirect('/managers/inventory');
+    }
 });
+
 
 router.get('/inventory', (req, res) => {
     inventory = []
@@ -113,29 +159,53 @@ router.get('/menu' , (req, res) => {
 router.post('/menu', (req, res) => {
     let{id,price} = req.body;
     let errors = [];
-    if(parseInt(id) < 0 || parseFloat(price) < 0) {
-        errors.push({message : "Input can not be negative, please try again!"});
-    }
-    if(errors.length > 0) {
-        console.log(errors);
-        res.render('menu', {errors,id,price});
-        console.log({id,price});
-    }
-    else {
-        pool
-            .query('UPDATE inventory SET price = $1 WHERE id = $2;',[price, id], (err, result) => {
-                if (err) throw err;
-                console.log(result.rows);
-            })
-            res.redirect('/managers/menu');
-    }
+    menu = [];
+    var idin = false;
+    const notid = new Boolean(true)
+    pool
+    .query('SELECT id,item,price FROM inventory WHERE (id BETWEEN 0 AND 23) OR (id BETWEEN 27 AND 32) AND item!=\'napkins\' OR id>38 ORDER BY id;')
+    .then(query_res => {
+        for(let i = 0; i < query_res.rowCount; ++i) {
+          if(id == query_res.rows[i].id){
+            idin = notid;
+          }
+          menu.push(query_res.rows[i]);
+        }
+        if(idin == !notid){
+            errors.push({message : "Input id is not in the scope, please try again!"});
+        }
+        if(parseInt(id) < 0 || parseFloat(price) < 0) {
+            errors.push({message : "Input can not be negative, please try again!"});
+        }
+        if(parseFloat(price) >= 100) {
+            errors.push({message : "Input price cannot bigger than $99.99, please try again!"});
+        }
+        const data = {menu: menu};
+        if(errors.length > 0) {
+            console.log(errors);
+            res.render('menu', {errors,data});
+            console.log({id,price});
+        }
+        else {
+            pool
+                .query('UPDATE inventory SET price = $1 WHERE id = $2;',[price, id], (err, result) => {
+                    if (err) throw err;
+                    console.log(result.rows);
+                })
+                res.redirect('/managers/menu');
+        }
+    });  
 });
+
 router.post('/menu1', (req, res) => {
     let{item,category,price} = req.body;
     var maxid;
     let errors1 = [];
     if(parseFloat(price) < 0) {
         errors1.push({message : "Input can not be negative, please try again!"});
+    }
+    if(parseFloat(price) >= 100) {
+        errors1.push({message : "Input price cannot bigger than $99.99, please try again!"});
     }
     if(errors1.length > 0) {
         console.log(errors1);

@@ -40,6 +40,15 @@
           </script>
         <div id="google_translate_id"></div>
         <a href="/servers/order" class="btn btn-primary btn-block mb-2">Return</a>
+        <ul>
+          <div class="col-sm">
+            <div class="text-danger">
+          <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+          <li><%= error.message %></li>
+          <% }) %> <% } %>
+        </div>
+        </div>
+        </ul>
         <h4>The order is <%= total_order %> 
             <br>  The total price is $<%= total_price %> </br>
           <h4>

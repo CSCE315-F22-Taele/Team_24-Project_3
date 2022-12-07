@@ -51,13 +51,36 @@
   <input type = "text" id = "quantity" name="quantity" placeholder="enter quantity" required="required"/>
 </div>
 <div class="col-sm">
-  <input type = "submit" value = "Update"/>
+  <input type = "submit" value = "Update item quantity"/>
 </div>
 </form>
 <ul>
   <div class="col-sm">
     <div class="text-danger">
   <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+  <li><%= error.message %></li>
+  <% }) %> <% } %>
+</div>
+</div>
+</ul>
+<form action = "/managers/inventory1" method = "POST"> 
+  <div class="col-sm">
+    <input type = "text" id = "item" name="item" placeholder="enter item" required="required"/>
+  </div>
+  <div class="col-sm">
+    <input type = "text" id = "category" name="category" placeholder="enter category" required="required"/>
+  </div>
+  <div class="col-sm">
+    <input type = "text" id = "price" name="price" placeholder="enter price" required="required"/>
+  </div>
+  <div class="col-sm">
+    <input type = "submit" value = "Add New Item"/>
+  </div>
+</form>
+<ul>
+  <div class="col-sm">
+    <div class="text-danger">
+  <% if (typeof errors1 != 'undefined') { %> <% errors1.forEach(error => { %>
   <li><%= error.message %></li>
   <% }) %> <% } %>
 </div>
