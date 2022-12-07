@@ -54,6 +54,7 @@
       </script>
       <div id="google_translate_id"></div>
       <button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button>
+      <a href="/customers/orderslistC" class="btn btn-primary btn-block mb-2">View Current Order</a>
       <h1>Entrees</h1>
       <% for (var i=0; i < entreearr.length; i++ ) { %>
         <form action="/servers/order/entrees/entree/<%= i %>" method="POST">
