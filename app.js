@@ -62,6 +62,7 @@ app.use('/nutrition',require('./routes/customerview.js'));
 app.use('/inventory',require('./routes/managers.js'));
 app.use('/saleshistory',require('./routes/managers.js'));
 app.use('/employeelist',require('./routes/managers.js'));
+app.use('/custlist',require('./routes/managers.js'));
 app.use('/menu', require('./routes/managers.js'));
 app.use('/managers',require('./routes/managers.js'));
 

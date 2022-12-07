@@ -28,6 +28,22 @@ router.get('/servers', (req, res) => {
     res.render('servers');
 });
 
+//GET CUSTOMER LIST!
+router.get('/custlist' , (req, res) => {
+    custlist = []
+    pool
+        .query('SELECT * FROM customertable;')
+        .then(query_res => {
+            for(let i = 0; i < query_res.rowCount; ++i) {
+            custlist.push(query_res.rows[i]);
+            }
+            const data = {custlist, custlist};
+            console.log(custlist);
+            res.render('custlist', data);
+        });
+});
+
+
 //ORDER BUTTONS 
 router.get('/order/bowl', (req, res) => {
     entreearr = []

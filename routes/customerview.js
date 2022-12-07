@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 // Create express router
 const port = 3000;
 var moment = require('moment');
+
 // Create pool
 const pool = new Pool({
     user: process.env.PSQL_USER,
@@ -456,6 +457,7 @@ router.post('/orderC/confirm', (req, res) => {
     var fixprice = 0.0
     let errors = []
     let { date } = req.body;
+    let { custname } = req.body;
     if (moment(date, 'YYYY-MM-DD', true).isValid() == false) {
         errors.push({ message: "Please enter correct date format" });
         pool.query('SELECT * FROM currentorders;')
@@ -497,6 +499,13 @@ router.post('/orderC/confirm', (req, res) => {
             pool.query("INSERT INTO itemizedhistory (date,item,price) VALUES($1,$2,$3)", [moment(date).format("YYYY-MM-DD"), total_order, fixprice], (err, result) => {
                 if (err) throw err;
             })
+
+            
+            pool.query("INSERT INTO customertable (id, name) VALUES($1,$2)", [moment(date).format("YYYY-MM-DD"), custname], (err, result) => {
+                if (err) throw err;
+            })
+            
+           
             pool.query("TRUNCATE TABLE currentorders")
 
         })
