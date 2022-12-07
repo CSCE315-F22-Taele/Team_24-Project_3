@@ -12,11 +12,25 @@ process.on('SIGINT', function() {
     console.log('Application successfully shutdown');
     process.exit(0);
 });
-
+/**
+ * Route serving server login form.
+ * @name get/serverlogin
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/serverlogin', (req, res) => {
     res.render('serverlogin');
 });
-
+/**
+   * @swagger
+   * /:
+   *   post:
+   *     description: 
+   *     responses:
+   *       200:
+   *         description: All users were returned.
+   */
 router.post('/serverlogin', (req, res) => {
     let{username, password} = req.body;
     let errors = [];

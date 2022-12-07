@@ -12,7 +12,13 @@ process.on('SIGINT', function() {
     console.log('Application successfully shutdown');
     process.exit(0);
 });
-
+/**
+ * Route serving manager login form.
+ * @name get/managerlogin
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/managerlogin', (req, res) => {
     res.render('managerlogin');
 });
