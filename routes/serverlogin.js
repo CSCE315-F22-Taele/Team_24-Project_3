@@ -12,11 +12,22 @@ process.on('SIGINT', function() {
     console.log('Application successfully shutdown');
     process.exit(0);
 });
-
+/**
+ * Route serving server login form.
+ * @name get/serverlogin
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/serverlogin', (req, res) => {
     res.render('serverlogin');
 });
-
+/**
+ * Route validating server login form. On successful verification, user gets redericted to the server's view
+ * @name post/serverlogin
+ * @function
+ * @param {string, string} credentials - user provides user credentials to be verified
+ */
 router.post('/serverlogin', (req, res) => {
     let{username, password} = req.body;
     let errors = [];
