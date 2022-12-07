@@ -33,7 +33,8 @@ router.get('/managerlogin', (req, res) => {
  * Route validating manager login form. On successful verification, user gets redericted to the manager's view
  * @name post/managerlogin
  * @function
- * @param {string, string} credentials - user provides user credentials to be verified
+ * @param {string} username - user provides username to be verified
+ * @param {string} password - user provides password to be verified
  */
 router.post('/managerlogin', (req, res) => {
     let{username, password} = req.body;

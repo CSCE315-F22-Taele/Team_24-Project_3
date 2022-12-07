@@ -79,7 +79,9 @@ router.post('/inventory', (req, res) => {
  * Route submitting manager's request to change inventory prices of specified items and item additions
  * @name post/inventory1
  * @function
- * @param {string, string, int} - manager provides item name, category of item, and the updated price
+ * @param {string} item - user provides new item name
+ * @param {string} category - user provides item's category (side, entree)
+ * @param {float} price - user provides item's price
  * @param {callback} middleware - Express middleware.
  */
 router.post('/inventory1', (req, res) => {
@@ -207,7 +209,8 @@ router.get('/menu' , (req, res) => {
  * Route submitting manager's request to add menu items
  * @name post/menu
  * @function
- * @param {int, float} - manager provides id of the item and updated price
+ * @param {int} id - user provides item's id
+ * @param {float} price - user provides item's price
  * @param {callback} middleware - Express middleware.
  */
 router.post('/menu', (req, res) => {
@@ -255,7 +258,9 @@ router.post('/menu', (req, res) => {
  * Route submitting manager's request to add items from inventory's view
  * @name post/menu1
  * @function
- * @param {int, string, float} - adds new item with required fields of id, name, and price to the database
+ * @param {string} item - user provides new item name
+ * @param {string} category - user provides item's category (side, entree)
+ * @param {float} price - user provides item's price
  * @param {callback} middleware - Express middleware.
  */
 router.post('/menu1', (req, res) => {

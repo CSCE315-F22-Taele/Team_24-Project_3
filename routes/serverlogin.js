@@ -31,7 +31,8 @@ router.get('/serverlogin', (req, res) => {
  * Route validating server login form. On successful verification, user gets redericted to the server's view
  * @name post/serverlogin
  * @function
- * @param {string, string} credentials - user provides user credentials to be verified
+ * @param {string} username - users provide username to be verified
+ * @param {stirng} password - users provide password to be verified 
  */
 router.post('/serverlogin', (req, res) => {
     let{username, password} = req.body;
