@@ -113,6 +113,7 @@ router.get('/orderC/bowlC', (req, res) => {
 
 router.get('/orderC/entreesC', (req, res) => {
   entreearr = []
+  let errors = [];
   pool
       .query("SELECT item,price,category FROM inventory WHERE category = 'entree' ORDER by id;")
       .then(query_res => {
@@ -124,6 +125,10 @@ router.get('/orderC/entreesC', (req, res) => {
           console.log(entreearr.length);
           for(let i=0;i< entreearr.length;i++){
               router.post('/orderC/entreesC/entree/'+i, (req, res) => {
+                  console.log(entreearr[i].item + " has been added to your order");
+                  errors.push({message: entreearr[i].item + " has been added to your order"});
+                  res.render('entreesC', {errors});
+                  errors = [];
                   pool.query("INSERT INTO currentorders VALUES ($1,$2)",[entreearr[i].item,entreearr[i].price], (err, result) => {
                       if (err) throw err;
                   })
