@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: managers.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: managers.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** Express router providing user related routes
+ * @module routes/managers
+ * @requires express, body-parser, pg
+ */
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const { redirect } = require('express/lib/response');
+const router = express.Router();
+const { Pool } = require('pg');
+const dotenv = require('dotenv').config();
+// Create express app
+const port = 3000;
+// Create pool
+const pool = new Pool({
+    user: process.env.PSQL_USER,
+    host: process.env.PSQL_HOST,
+    database: process.env.PSQL_DATABASE,
+    password: process.env.PSQL_PASSWORD,
+    port: process.env.PSQL_PORT,
+    ssl: {rejectUnauthorized: false}
+});
+
+process.on('SIGINT', function() {
+    pool.end();
+    console.log('Application successfully shutdown');
+    process.exit(0);
+});
+
+/**
+ * Route serving manager's view.
+ * @name get/managers
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/managers', (req, res) => {
+    res.render('managers');
+});
+
+router.post('/inventory', (req, res) => {
+    let{id,quantity} = req.body;
+    let errors =[];
+    var maxid
+    pool
+    .query('SELECT id FROM inventory WHERE id=(SELECT max(id) FROM inventory);', (err, result) => {
+        pool.query('SELECT * FROM inventory order by id;')
+        .then(query_res => {
+            for (let i = 0; i &lt; query_res.rowCount; i++){
+                inventory.push(query_res.rows[i]);
+            }
+            const data = {inventory: inventory};
+            maxid = result.rows[0].id;
+            if(parseInt(id)&lt;0 || parseInt(quantity)&lt;0){
+                errors.push({message: "Input cannot be negative, please try again"});
+            }
+            if(parseInt(id)>maxid){
+                errors.push({message: "Input id cannot bigger than the maximum id , please try again"});
+            }
+            if(errors.length>0) {
+                console.log(errors);
+                res.render('inventory', {errors,data});
+            }
+            else {
+                pool
+                    .query('UPDATE inventory SET quantity = $1 WHERE id = $2;',[quantity, id], (err, result) => {
+                        if (err) throw err;
+                        console.log(result.rows);
+                    })
+                    res.redirect('/managers/inventory');
+                }
+        });
+       
+    })
+  
+});
+
+/**
+ * Route submitting manager's request to change inventory prices of specified items and item additions
+ * @name post/inventory1
+ * @function
+ * @param {string} item - user provides new item name
+ * @param {string} category - user provides item's category (side, entree)
+ * @param {float} price - user provides item's price
+ * @param {callback} middleware - Express middleware.
+ */
+router.post('/inventory1', (req, res) => {
+    let{item,category,price} = req.body;
+    var maxid;
+    let errors1 = [];
+    if(parseFloat(price) &lt; 0) {
+        errors1.push({message : "Input can not be negative, please try again!"});
+    }
+    if(parseFloat(price) >= 100) {
+        errors1.push({message : "Input price cannot bigger than $99.99, please try again!"});
+    }
+    if(errors1.length > 0) {
+        console.log(errors1);
+        res.render('inventory', {errors1,category,price});
+        console.log({category,price});
+    }
+    else {
+        pool
+        .query('SELECT id FROM inventory WHERE id=(SELECT max(id) FROM inventory);', (err, result) => {
+            if (err) throw err;
+            maxid = result.rows[0].id;
+            console.log(maxid);
+            pool
+            .query('INSERT INTO inventory VALUES ($1,$2,$3,100,$4);',[maxid+1,item,category,price],(err, result) => {
+            if (err) throw err;
+        })
+        })
+            res.redirect('/managers/inventory');
+    }
+});
+
+/**
+ * Route current inventory view
+ * @name get/inventory1
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/inventory', (req, res) => {
+    inventory = []
+    pool
+        .query('SELECT * FROM inventory order by id;')
+        .then(query_res => {
+            for (let i = 0; i &lt; query_res.rowCount; i++){
+                inventory.push(query_res.rows[i]);
+            }
+            const data = {inventory: inventory};
+            res.render('inventory', data);
+        });
+});
+
+/**
+ * Route current sales history view
+ * @name get/saleshistory
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/saleshistory', (req, res) => {
+    saleshistory = []
+    pool
+        .query('SELECT * FROM saleshistory order by date;')
+        .then(query_res => {
+            for (let i = 0; i &lt; query_res.rowCount; i++) {
+                // let stringRep = JSON.stringify(query_res.rows[i].date).substring(1,11);
+                // // console.log("Test : " + stringRep);
+                // let newObj = {
+                //     "date" : stringRep,
+                //     "netsales" : query_res.rows[i].netsales,
+                //     "numorders" : query_res.rows[i].numorders
+                // }
+                query_res.rows[i].date = JSON.stringify(query_res.rows[i].date).substring(1,11);
+                saleshistory.push(query_res.rows[i]);
+            }
+            const data = {saleshistory: saleshistory};
+            console.log(saleshistory);
+            res.render('saleshistory', data);
+        });
+});
+
+/**
+ * Route current employee list view
+ * @name get/employeelist
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/employeelist' , (req, res) => {
+    employeelist = []
+    pool
+        .query('SELECT * FROM employees;')
+        .then(query_res => {
+            for(let i = 0; i &lt; query_res.rowCount; ++i) {
+                employeelist.push(query_res.rows[i]);
+            }
+            const data = {employeelist, employeelist};
+            console.log(employeelist);
+            res.render('employeelist', data);
+        });
+});
+
+/**
+ * Route current menu view
+ * @name get/menu
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/menu' , (req, res) => {
+    menu = []
+    pool
+        .query('SELECT id,item,price FROM inventory WHERE (id BETWEEN 0 AND 23) OR (id BETWEEN 27 AND 32) AND item!=\'napkins\' OR id>38 ORDER BY id;')
+        .then(query_res => {
+            for(let i = 0; i &lt; query_res.rowCount; ++i) {
+                menu.push(query_res.rows[i]);
+            }
+            const data = {menu, menu};
+            // console.log(menu);
+            res.render('menu', data);
+        });
+});
+
+/**
+ * Route submitting manager's request to add menu items
+ * @name post/menu
+ * @function
+ * @param {int} id - user provides item's id
+ * @param {float} price - user provides item's price
+ * @param {callback} middleware - Express middleware.
+ */
+router.post('/menu', (req, res) => {
+    let{id,price} = req.body;
+    let errors = [];
+    menu = [];
+    var idin = false;
+    const notid = new Boolean(true)
+    pool
+    .query('SELECT id,item,price FROM inventory WHERE (id BETWEEN 0 AND 23) OR (id BETWEEN 27 AND 32) AND item!=\'napkins\' OR id>38 ORDER BY id;')
+    .then(query_res => {
+        for(let i = 0; i &lt; query_res.rowCount; ++i) {
+          if(id == query_res.rows[i].id){
+            idin = notid;
+          }
+          menu.push(query_res.rows[i]);
+        }
+        if(idin == !notid){
+            errors.push({message : "Input id is not in the scope, please try again!"});
+        }
+        if(parseInt(id) &lt; 0 || parseFloat(price) &lt; 0) {
+            errors.push({message : "Input can not be negative, please try again!"});
+        }
+        if(parseFloat(price) >= 100) {
+            errors.push({message : "Input price cannot bigger than $99.99, please try again!"});
+        }
+        const data = {menu: menu};
+        if(errors.length > 0) {
+            console.log(errors);
+            res.render('menu', {errors,data});
+            console.log({id,price});
+        }
+        else {
+            pool
+                .query('UPDATE inventory SET price = $1 WHERE id = $2;',[price, id], (err, result) => {
+                    if (err) throw err;
+                    console.log(result.rows);
+                })
+                res.redirect('/managers/menu');
+        }
+    });  
+});
+
+/**
+ * Route submitting manager's request to add items from inventory's view
+ * @name post/menu1
+ * @function
+ * @param {string} item - user provides new item name
+ * @param {string} category - user provides item's category (side, entree)
+ * @param {float} price - user provides item's price
+ * @param {callback} middleware - Express middleware.
+ */
+router.post('/menu1', (req, res) => {
+    let{item,category,price} = req.body;
+    var maxid;
+    let errors1 = [];
+    if(parseFloat(price) &lt; 0) {
+        errors1.push({message : "Input can not be negative, please try again!"});
+    }
+    if(parseFloat(price) >= 100) {
+        errors1.push({message : "Input price cannot bigger than $99.99, please try again!"});
+    }
+    if(errors1.length > 0) {
+        console.log(errors1);
+        res.render('menu', {errors1,category,price});
+        console.log({category,price});
+    }
+    else {
+        pool
+        .query('SELECT id FROM inventory WHERE id=(SELECT max(id) FROM inventory);', (err, result) => {
+            if (err) throw err;
+            maxid = result.rows[0].id;
+            console.log(maxid);
+            pool
+            .query('INSERT INTO inventory VALUES ($1,$2,$3,100,$4);',[maxid+1,item,category,price],(err, result) => {
+            if (err) throw err;
+        })
+        })
+            res.redirect('/managers/menu');
+    }
+});
+
+module.exports = router;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routes_managers.html">routes/managers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 22:48:09 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
