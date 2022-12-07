@@ -56,7 +56,7 @@
 
               var map = new google.maps.Map(
                 document.getElementById('map'), {
-                  zoom: 13.5,
+                  zoom: 13,
                   center: AM
               });
 
@@ -80,19 +80,32 @@
                 // const contentString = "Panda Express" + place.formatted_address;
                 if (place.formatted_address === "300 Polo Rd Room 129, College Station, TX 77840, United States") {
                   var infoWindow = new google.maps.InfoWindow({
-                    content: "<div>Panda Express @ " + place.formatted_address + 
-                              "</div><div>Open Sun to Thu 10:30AM-10PM, Fri to Sat 10:30AM-10:30PM</div>"
+                    content: "<div><b>Panda Express</b></div>" + place.formatted_address + 
+                              "<div><b>Open Mon to Fri 11AM-8PM</b></div>"
                   });
                 }
                 if (place.formatted_address === "1400 Texas Ave S, College Station, TX 77840, United States") {
                   var infoWindow = new google.maps.InfoWindow({
-                    content: "<div>Panda Express @ " + place.formatted_address + 
-                              "</div><div>Open Mon to Fri 11AM-8PM</div>"
+                    content: "<div><b>Panda Express</b></div>" + place.formatted_address + 
+                              "<div><b>Open Sun to Thu 10:30AM-10PM, Fri to Sat 10:30AM-10:30PM</b></div>"
                   });
                 }
-                else {
+                if (place.formatted_address === "275 Joe Routt Blvd, College Station, TX 77840, United States") {
                   var infoWindow = new google.maps.InfoWindow({
-                    content: "<div>Panda Express @ </div>" + place.formatted_address
+                    content: "<div><b>Panda Express</b></div>" + place.formatted_address + 
+                              "<div><b>Open 7 days/week 11AM-10PM</b></div>"
+                  });
+                }
+                if (place.formatted_address === "639 N Harvey Mitchell Pkwy, Bryan, TX 77803, United States") {
+                  var infoWindow = new google.maps.InfoWindow({
+                    content: "<div><b>Panda Express</b></div>" + place.formatted_address + 
+                              "<div><b>Open Sun to Thu 10:30AM-9:30PM, Fri to Sat 10:30AM-10PM</b></div>"
+                  });
+                }
+                if (place.formatted_address === "2206 Briarcrest Dr, Bryan, TX 77802, United States") {
+                  var infoWindow = new google.maps.InfoWindow({
+                    content: "<div><b>Panda Express</b></div>" + place.formatted_address + 
+                              "<div><b>Open Sun to Thu 10:30AM-10PM, Fri to Sat 10:30AM-10:30PM</b></div>"
                   });
                 }
 
