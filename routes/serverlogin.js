@@ -23,14 +23,11 @@ router.get('/serverlogin', (req, res) => {
     res.render('serverlogin');
 });
 /**
-   * @swagger
-   * /:
-   *   post:
-   *     description: 
-   *     responses:
-   *       200:
-   *         description: All users were returned.
-   */
+ * Route validating server login form. On successful verification, user gets redericted to the server's view
+ * @name post/serverlogin
+ * @function
+ * @param {string, string} credentials - user provides user credentials to be verified
+ */
 router.post('/serverlogin', (req, res) => {
     let{username, password} = req.body;
     let errors = [];
