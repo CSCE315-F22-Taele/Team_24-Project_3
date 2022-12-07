@@ -1,4 +1,32 @@
-/** Express router providing user related routes
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: servers.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: servers.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** Express router providing user related routes
  * @module routes/servers
  * @requires express, body-parser, pg
  */
@@ -38,22 +66,6 @@ router.get('/servers', (req, res) => {
     res.render('servers');
 });
 
-//GET CUSTOMER LIST!
-router.get('/custlist' , (req, res) => {
-    custlist = []
-    pool
-        .query('SELECT * FROM customertable;')
-        .then(query_res => {
-            for(let i = 0; i < query_res.rowCount; ++i) {
-            custlist.push(query_res.rows[i]);
-            }
-            const data = {custlist, custlist};
-            console.log(custlist);
-            res.render('custlist', data);
-        });
-});
-
-
 /**
  * Route serving server's ordering view for bowls.
  * @name get/order/bowl
@@ -69,18 +81,18 @@ router.get('/order/bowl', (req, res) => {
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; i++) {
+            for (let i = 0; i &lt; query_res.rowCount; i++) {
                 entreearr.push(query_res.rows[i]);
             }
             const data = { entreearr: entreearr };
             res.render('bowl', data);
             router.post('/order/bowl/return/', (req, res) => {
                 console.log(entree_count)
-                if ((entree_count < 1) || (sides_count < 1)) {
-                    if (entree_count < 1) {
+                if ((entree_count &lt; 1) || (sides_count &lt; 1)) {
+                    if (entree_count &lt; 1) {
                         errors.push({ message: "please choose 1 entree" });
                     }
-                    if (sides_count < 1) {
+                    if (sides_count &lt; 1) {
                         errors.push({ message: "please choose 1 side" });
                     }
                     if (errors.length > 0) {
@@ -94,14 +106,14 @@ router.get('/order/bowl', (req, res) => {
                     sides_count = 0;
                 }
             })
-            for (let j = 0; j < entreearr.length; j++) {
+            for (let j = 0; j &lt; entreearr.length; j++) {
                 router.post('/order/bowl/entree/' + j, (req, res) => {
 
-                    if ((entreearr[j].category == 'entree' && entree_count >= 1) || (entreearr[j].category == 'sides' && sides_count >= 1)) {
-                        if ((entreearr[j].category == 'entree' && entree_count == 1)) {
+                    if ((entreearr[j].category == 'entree' &amp;&amp; entree_count >= 1) || (entreearr[j].category == 'sides' &amp;&amp; sides_count >= 1)) {
+                        if ((entreearr[j].category == 'entree' &amp;&amp; entree_count == 1)) {
                             errors.push({ message: "You can only choose at maximum 1 entree for a bowl!" });
                         }
-                        if ((entreearr[j].category == 'sides' && sides_count == 1)) {
+                        if ((entreearr[j].category == 'sides' &amp;&amp; sides_count == 1)) {
                             errors.push({ message: "You can only choose at maximum 1 side for a bowl!" });
                         }
                         if (errors.length > 0) {
@@ -113,10 +125,10 @@ router.get('/order/bowl', (req, res) => {
                         pool.query("INSERT INTO currentorders VALUES ($1,NULL)", [entreearr[j].item], (err, result) => {
                             if (err) throw err;
                         })
-                        if ((entreearr[j].category == 'entree' && entree_count < 1)) {
+                        if ((entreearr[j].category == 'entree' &amp;&amp; entree_count &lt; 1)) {
                             entree_count++;
                         }
-                        if ((entreearr[j].category == 'sides' && sides_count < 1)) {
+                        if ((entreearr[j].category == 'sides' &amp;&amp; sides_count &lt; 1)) {
                             sides_count++;
                         }
                     }
@@ -140,13 +152,13 @@ router.get('/order/entrees', (req, res) => {
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' ORDER by id;")
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; i++) {
+            for (let i = 0; i &lt; query_res.rowCount; i++) {
                 entreearr.push(query_res.rows[i]);
             }
             const data = { entreearr: entreearr };
             res.render('entrees', data);
             console.log(entreearr.length);
-            for (let i = 0; i < entreearr.length; i++) {
+            for (let i = 0; i &lt; entreearr.length; i++) {
                 router.post('/order/entrees/entree/' + i, (req, res) => {
                     pool.query("INSERT INTO currentorders VALUES ($1,$2)", [entreearr[i].item, entreearr[i].price], (err, result) => {
                         if (err) throw err;
@@ -168,13 +180,13 @@ router.get('/order/sides', (req, res) => {
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'sides' ORDER by id;")
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; i++) {
+            for (let i = 0; i &lt; query_res.rowCount; i++) {
                 entreearr.push(query_res.rows[i]);
             }
             const data = { entreearr: entreearr };
             res.render('sides', data);
             console.log(entreearr.length);
-            for (let i = 0; i < entreearr.length; i++) {
+            for (let i = 0; i &lt; entreearr.length; i++) {
                 router.post('/order/sides/entree/' + i, (req, res) => {
                     pool.query("INSERT INTO currentorders VALUES ($1,$2)", [entreearr[i].item, entreearr[i].price], (err, result) => {
                         if (err) throw err;
@@ -200,18 +212,18 @@ router.get('/order/biggerplate', (req, res) => {
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; i++) {
+            for (let i = 0; i &lt; query_res.rowCount; i++) {
                 entreearr.push(query_res.rows[i]);
             }
             const data = { entreearr: entreearr };
             res.render('biggerplate', data);
             router.post('/order/biggerplate/return/', (req, res) => {
                 console.log(entree_count)
-                if (entree_count < 3 || sides_count < 1) {
-                    if (entree_count < 3) {
+                if (entree_count &lt; 3 || sides_count &lt; 1) {
+                    if (entree_count &lt; 3) {
                         errors.push({ message: "please choose 3 entrees" });
                     }
-                    if (sides_count < 1) {
+                    if (sides_count &lt; 1) {
                         errors.push({ message: "please choose 1 side" });
                     }
                     if (errors.length > 0) {
@@ -225,15 +237,15 @@ router.get('/order/biggerplate', (req, res) => {
                     sides_count = 0;
                 }
             })
-            for (let j = 0; j < entreearr.length; j++) {
+            for (let j = 0; j &lt; entreearr.length; j++) {
                 router.post('/order/biggerplate/entree/' + j, (req, res) => {
 
                     console.log(entree_count)
-                    if ((entreearr[j].category == 'entree' && entree_count >= 3) || (entreearr[j].category == 'sides' && sides_count >= 1)) {
-                        if ((entreearr[j].category == 'entree' && entree_count == 3)) {
+                    if ((entreearr[j].category == 'entree' &amp;&amp; entree_count >= 3) || (entreearr[j].category == 'sides' &amp;&amp; sides_count >= 1)) {
+                        if ((entreearr[j].category == 'entree' &amp;&amp; entree_count == 3)) {
                             errors.push({ message: "You can only choose at maximum 3 entrees for a biggerplate!" });
                         }
-                        if ((entreearr[j].category == 'sides' && sides_count == 1)) {
+                        if ((entreearr[j].category == 'sides' &amp;&amp; sides_count == 1)) {
                             errors.push({ message: "You can only choose at maximum 1 side for a biggerplate!" });
                         }
                         if (errors.length > 0) {
@@ -245,10 +257,10 @@ router.get('/order/biggerplate', (req, res) => {
                         pool.query("INSERT INTO currentorders VALUES ($1,NULL)", [entreearr[j].item], (err, result) => {
                             if (err) throw err;
                         })
-                        if ((entreearr[j].category == 'entree' && entree_count < 3)) {
+                        if ((entreearr[j].category == 'entree' &amp;&amp; entree_count &lt; 3)) {
                             entree_count++;
                         }
-                        if ((entreearr[j].category == 'sides' && sides_count < 1)) {
+                        if ((entreearr[j].category == 'sides' &amp;&amp; sides_count &lt; 1)) {
                             sides_count++;
                         }
                     }
@@ -275,18 +287,18 @@ router.get('/order/plate', (req, res) => {
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; i++) {
+            for (let i = 0; i &lt; query_res.rowCount; i++) {
                 entreearr.push(query_res.rows[i]);
             }
             const data = { entreearr: entreearr };
             res.render('plate', data);
             router.post('/order/plate/return/', (req, res) => {
                 console.log(entree_count)
-                if (entree_count < 2 || sides_count < 1) {
-                    if (entree_count < 2) {
+                if (entree_count &lt; 2 || sides_count &lt; 1) {
+                    if (entree_count &lt; 2) {
                         errors.push({ message: "please choose 2 entrees" });
                     }
-                    if (sides_count < 1) {
+                    if (sides_count &lt; 1) {
                         errors.push({ message: "please choose 1 side" });
                     }
                     if (errors.length > 0) {
@@ -300,15 +312,15 @@ router.get('/order/plate', (req, res) => {
                     sides_count = 0;
                 }
             })
-            for (let j = 0; j < entreearr.length; j++) {
+            for (let j = 0; j &lt; entreearr.length; j++) {
                 router.post('/order/plate/entree/' + j, (req, res) => {
 
                     console.log(entree_count)
-                    if ((entreearr[j].category == 'entree' && entree_count >= 2) || (entreearr[j].category == 'sides' && sides_count >= 1)) {
-                        if ((entreearr[j].category == 'entree' && entree_count == 2)) {
+                    if ((entreearr[j].category == 'entree' &amp;&amp; entree_count >= 2) || (entreearr[j].category == 'sides' &amp;&amp; sides_count >= 1)) {
+                        if ((entreearr[j].category == 'entree' &amp;&amp; entree_count == 2)) {
                             errors.push({ message: "You can only choose at maximum 2 entrees for a plate!" });
                         }
-                        if ((entreearr[j].category == 'sides' && sides_count == 1)) {
+                        if ((entreearr[j].category == 'sides' &amp;&amp; sides_count == 1)) {
                             errors.push({ message: "You can only choose at maximum 1 side for a plate!" });
                         }
                         if (errors.length > 0) {
@@ -320,10 +332,10 @@ router.get('/order/plate', (req, res) => {
                         pool.query("INSERT INTO currentorders VALUES ($1,NULL)", [entreearr[j].item], (err, result) => {
                             if (err) throw err;
                         })
-                        if ((entreearr[j].category == 'entree' && entree_count < 2)) {
+                        if ((entreearr[j].category == 'entree' &amp;&amp; entree_count &lt; 2)) {
                             entree_count++;
                         }
-                        if ((entreearr[j].category == 'sides' && sides_count < 1)) {
+                        if ((entreearr[j].category == 'sides' &amp;&amp; sides_count &lt; 1)) {
                             sides_count++;
                         }
                     }
@@ -346,7 +358,7 @@ router.get('/order', (req, res) => {
 
     pool.query("SELECT price,item FROM inventory WHERE item = 'bowl' OR item = 'plate' OR item = 'biggerplate' Order by id ")
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; ++i) {
+            for (let i = 0; i &lt; query_res.rowCount; ++i) {
                 bowllist.push(query_res.rows[i]);
             }
             const data = { bowllist: bowllist };
@@ -357,7 +369,7 @@ router.get('/order', (req, res) => {
 //const data = {orderarr: orderarr};
 //res.render('order', data);
 
-//for(let i=1;i<= orderarr.length;i++){
+//for(let i=1;i&lt;= orderarr.length;i++){
 //router.post('/order/'+i, (req, res) => {
 //pool.query("INSERT INTO currentorders VALUES ($1,$2)",[orderarr[i].item, orderarr[i].price], (err, result) => {
 //if (err) throw err;
@@ -452,9 +464,9 @@ router.post('/order/reset', (req, res) => {
 router.get('/restockreport', (req, res) => {
     restockreport = []
     pool
-        .query("SELECT id,item,category,quantity FROM inventory WHERE quantity<50 ORDER BY quantity;")
+        .query("SELECT id,item,category,quantity FROM inventory WHERE quantity&lt;50 ORDER BY quantity;")
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; i++) {
+            for (let i = 0; i &lt; query_res.rowCount; i++) {
                 restockreport.push(query_res.rows[i]);
             }
             const data = { restockreport: restockreport };
@@ -475,7 +487,7 @@ router.get('/itemsales', (req, res) => {
     pool
         .query('SELECT * FROM itemizedhistory Order by date;')
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; ++i) {
+            for (let i = 0; i &lt; query_res.rowCount; ++i) {
                 query_res.rows[i].date = JSON.stringify(query_res.rows[i].date).substring(1, 11);
                 itemsales.push(query_res.rows[i]);
             }
@@ -496,7 +508,7 @@ router.get('/orderslist', (req, res) => {
     pool
         .query('SELECT * FROM currentorders;')
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; ++i) {
+            for (let i = 0; i &lt; query_res.rowCount; ++i) {
                 orderslist.push(query_res.rows[i]);
             }
             const data = { orderslist: orderslist };
@@ -519,13 +531,13 @@ router.get('/order/orderconfirm', (req, res) => {
     var fixprice = 0.0
     pool.query('SELECT * FROM currentorders;')
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; ++i) {
+            for (let i = 0; i &lt; query_res.rowCount; ++i) {
                 orderslist.push(query_res.rows[i]);
             }
-            for (let i = 0; i < orderslist.length; ++i) {
+            for (let i = 0; i &lt; orderslist.length; ++i) {
                 total_order += orderslist[i].orderstaken + " "
             }
-            for (let i = 0; i < orderslist.length; ++i) {
+            for (let i = 0; i &lt; orderslist.length; ++i) {
                 if (orderslist[i].price != null) {
                     temp_price = parseFloat(orderslist[i].price)
                     total_price += temp_price
@@ -558,13 +570,13 @@ router.post('/order/confirm', (req, res) => {
         errors.push({ message: "Please enter correct date format" });
         pool.query('SELECT * FROM currentorders;')
             .then(query_res => {
-                for (let i = 0; i < query_res.rowCount; ++i) {
+                for (let i = 0; i &lt; query_res.rowCount; ++i) {
                     orderslist.push(query_res.rows[i]);
                 }
-                for (let i = 0; i < orderslist.length; ++i) {
+                for (let i = 0; i &lt; orderslist.length; ++i) {
                     total_order += orderslist[i].orderstaken + " "
                 }
-                for (let i = 0; i < orderslist.length; ++i) {
+                for (let i = 0; i &lt; orderslist.length; ++i) {
                     if (orderslist[i].price != null) {
                         temp_price = parseFloat(orderslist[i].price)
                         total_price += temp_price
@@ -578,13 +590,13 @@ router.post('/order/confirm', (req, res) => {
     else {
         res.redirect('/servers/order')
         pool.query('SELECT * FROM currentorders;', (err, res) => {
-            for (let i = 0; i < res.rowCount; ++i) {
+            for (let i = 0; i &lt; res.rowCount; ++i) {
                 orderslist.push(res.rows[i]);
             }
-            for (let i = 0; i < orderslist.length; ++i) {
+            for (let i = 0; i &lt; orderslist.length; ++i) {
                 total_order += orderslist[i].orderstaken + " "
             }
-            for (let i = 0; i < orderslist.length; ++i) {
+            for (let i = 0; i &lt; orderslist.length; ++i) {
                 if (orderslist[i].price != null) {
                     temp_price = parseFloat(orderslist[i].price)
                     total_price += temp_price
@@ -627,7 +639,7 @@ router.post('/itemsales/date', (req, res) => {
     else {
         pool.query("SELECT * FROM itemizedhistory WHERE date BETWEEN $1 AND $2;", [moment(startdate).format("YYYY-MM-DD"), moment(enddate).format("YYYY-MM-DD")])
             .then(query_res => {
-                for (let i = 0; i < query_res.rowCount; i++) {
+                for (let i = 0; i &lt; query_res.rowCount; i++) {
                     query_res.rows[i].date = JSON.stringify(query_res.rows[i].date).substring(1, 11);
                     itemsales.push(query_res.rows[i]);
                 }
@@ -649,3 +661,26 @@ router.get('/itemsales/itemsalesdate', (req, res) => {
 
 
 module.exports = router;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-routes_servers.html">routes/servers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 22:47:19 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
