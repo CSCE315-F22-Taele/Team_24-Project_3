@@ -32,5 +32,8 @@
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.8.0",
     "text-to-speech-js": "^1.1.10"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.0"
   }
 }
