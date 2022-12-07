@@ -1,3 +1,8 @@
+/** Express router providing user related routes
+ * @module routes/customerview
+ * @requires express, body-parser, pg
+ */
+
 const express = require('express');
 const { redirect } = require('express/lib/response');
 const router = express.Router();
@@ -21,24 +26,57 @@ process.on('SIGINT', function () {
     console.log('routerlication successfully shutdown');
     process.exit(0);
 });
-
+/**
+ * Route serving customer view.
+ * @name get/customers
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/customers', (req, res) => {
     res.render('customers');
 });
 
+/**
+ * Route serving Panda Express locations view.
+ * @name get/locations
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/locations', (req, res) => {
     res.render('locations');
 });
 
+/**
+ * Route serving menu nutrition view.
+ * @name get/nutrition
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/nutrition', (req, res) => {
     res.render('nutrition');
 });
 
+/**
+ * Route serving submission view.
+ * @name get/submissionR
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/submissionR', (req, res) => {
     res.render('submissionR');
 });
 
-//orderC BUTTONS 
+/**
+ * Route serving customer's ordering view for bowls.
+ * @name get/orderC/bowlC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/orderC/bowlC', (req, res) => {
     entreearr = []
     var entree_count = 0;
@@ -106,10 +144,13 @@ router.get('/orderC/bowlC', (req, res) => {
 
 });
 
-
-
-
-
+/**
+ * Route serving customer's ordering view for entrees.
+ * @name get/orderC/entreesC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 
 router.get('/orderC/entreesC', (req, res) => {
     entreearr = []
@@ -137,6 +178,13 @@ router.get('/orderC/entreesC', (req, res) => {
         });
 });
 
+/**
+ * Route serving customer's ordering view for sides.
+ * @name get/orderC/sidesC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/orderC/sidesC', (req, res) => {
     entreearr = []
     pool
@@ -158,6 +206,13 @@ router.get('/orderC/sidesC', (req, res) => {
         });
 });
 
+/**
+ * Route serving customer's ordering view for bigger plates.
+ * @name get/orderC/biggerplateC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/orderC/biggerplateC', (req, res) => {
     entreearr = []
     var entree_count = 0;
@@ -225,6 +280,13 @@ router.get('/orderC/biggerplateC', (req, res) => {
 
 });
 
+/**
+ * Route serving customer's ordering view for plates.
+ * @name get/orderC/plateC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/orderC/plateC', (req, res) => {
     entreearr = []
     entreelength = []
@@ -299,6 +361,14 @@ router.get('/orderC/plateC', (req, res) => {
 
 });
 
+/**
+ * Route serving customer's ordering view.
+ * @name get/orderC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+
 router.get('/orderC', (req, res) => {
     bowllist = []
 
@@ -325,6 +395,14 @@ router.get('/orderC', (req, res) => {
 //}
 //});
 //});
+
+/**
+ * Route submitting customer's bowl order.
+ * @name post/orderC/bowlC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/orderC/bowlC', (req, res) => {
     var bowl_price
     pool.query("SELECT price FROM inventory WHERE item = 'bowl'", (err, result) => {
@@ -338,6 +416,14 @@ router.post('/orderC/bowlC', (req, res) => {
     })
     res.redirect('/customers/orderC/bowlC')
 });
+
+/**
+ * Route submitting customer's plate order.
+ * @name post/orderC/plateC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/orderC/plateC', (req, res) => {
     var plate_price
     pool.query("SELECT price FROM inventory WHERE item = 'plate'", (err, result) => {
@@ -351,6 +437,14 @@ router.post('/orderC/plateC', (req, res) => {
     })
     res.redirect('/customers/orderC/plateC')
 });
+
+/**
+ * Route submitting customer's bigger plate order.
+ * @name post/orderC/biggerplateC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/orderC/biggerplateC', (req, res) => {
     var plate_price
     pool.query("SELECT price FROM inventory WHERE item = 'biggerplate'", (err, result) => {
@@ -364,6 +458,14 @@ router.post('/orderC/biggerplateC', (req, res) => {
     })
     res.redirect('/customers/orderC/biggerplateC')
 });
+
+/**
+ * Route submitting customer's order reset form.
+ * @name post/orderC/reset
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/orderC/reset', (req, res) => {
     pool.query("TRUNCATE TABLE currentorders")
 });
@@ -380,6 +482,14 @@ router.get('/orderslistC', (req, res) => {
             res.render('orderslistC', data);
         });
 });
+
+/**
+ * Route submitting customer's order to database.
+ * @name post/orderC/orderconfirmC
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/orderC/orderconfirmC', (req, res) => {
     orderslist = []
     var total_order = ''
@@ -407,6 +517,14 @@ router.get('/orderC/orderconfirmC', (req, res) => {
         });
 
 });
+
+/**
+ * Route submitting customer's order.
+ * @name post/orderC/confirm
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/orderC/confirm', (req, res) => {
     orderslist = []
     var total_order = ''
