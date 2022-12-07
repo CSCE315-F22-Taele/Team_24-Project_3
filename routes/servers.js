@@ -38,6 +38,13 @@ router.get('/servers', (req, res) => {
     res.render('servers');
 });
 
+/**
+ * Route customer queue.
+ * @name get/servers
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 //GET CUSTOMER LIST!
 router.get('/custlist' , (req, res) => {
     custlist = []
