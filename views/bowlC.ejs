@@ -63,9 +63,22 @@
             <div class="text-danger">
               <% if (typeof errors !='undefined' ) { %>
                 <% errors.forEach(error=> { %>
-                  <li>
+                  <li><strong>
                     <%= error.message %>
-                  </li>
+                  </strong></li>
+                <% }) %>
+              <% } %>
+            </div>
+          </div>
+        </ul>
+        <ul>
+          <div class="col-sm">
+            <div class="text-success">
+              <% if (typeof feedback !='undefined' ) { %>
+                <% feedback.forEach(item=> { %>
+                  <li><strong>
+                    <%= item.message %>
+                  </strong></li>
                   <% }) %>
                     <% } %>
             </div>

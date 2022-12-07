@@ -54,8 +54,21 @@
         }
       </script>
       <div id="google_translate_id"></div>
-      <button class="btn btn-primary btn-block mb-2" onclick="history.back()">Return</button>
+      <a href="/customers/orderC" class="btn btn-primary btn-block mb-2">Return</a>
       <h1>Sides</h1>
+      <ul>
+        <div class="col-sm">
+          <div class="text-success">
+            <% if (typeof feedback !='undefined' ) { %>
+              <% feedback.forEach(item=> { %>
+                <li><strong>
+                  <%= item.message %>
+                </strong></li>
+                <% }) %>
+                  <% } %>
+          </div>
+        </div>
+      </ul>
       <% for (var i=0; i < entreearr.length; i++ ) { %>
         <form action="/customers/orderC/sidesC/entree/<%= i %>" method="POST">
           <div class="row">
