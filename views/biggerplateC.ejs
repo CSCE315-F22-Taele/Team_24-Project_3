@@ -72,6 +72,19 @@
           </div>
         </div>
       </ul>
+      <ul>
+        <div class="col-sm">
+          <div class="text-success">
+            <% if (typeof feedback !='undefined' ) { %>
+              <% feedback.forEach(item=> { %>
+                <li><strong>
+                  <%= item.message %>
+                </strong></li>
+                <% }) %>
+                  <% } %>
+          </div>
+        </div>
+      </ul>
       <% for (var i=0; i < entreearr.length; i++ ) { %>
         <form action="/customers/orderC/biggerplateC/entree/<%= i %>" method="POST">
           <div class="row">

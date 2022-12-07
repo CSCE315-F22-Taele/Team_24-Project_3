@@ -82,6 +82,7 @@ router.get('/orderC/bowlC', (req, res) => {
     var entree_count = 0;
     var sides_count = 0;
     let errors = [];
+    let feedback = [];
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
@@ -99,13 +100,18 @@ router.get('/orderC/bowlC', (req, res) => {
                     if (sides_count < 1) {
                         errors.push({ message: "please choose 1 side" });
                     }
-                    if (errors.length > 0) {
-                        res.render('bowlC', { errors });
+                    if (errors.length > 0 && feedback.length > 0) {
+                        res.render('bowlC', { errors, feedback });
                         errors = []
+                    }
+                    else if (errors.length > 0 && feedback.length === 0) {
+                        res.render('bowlC', {errors});
+                        errors = [];
                     }
                 }
                 else {
                     res.redirect('/customers/orderC')
+                    feedback = [];
                     entree_count = 0;
                     sides_count = 0;
                 }
@@ -121,12 +127,18 @@ router.get('/orderC/bowlC', (req, res) => {
                         if ((entreearr[j].category == 'sides' && sides_count == 1)) {
                             errors.push({ message: "You can only choose at maximum 1 side for a bowl!" });
                         }
-                        if (errors.length > 0) {
-                            res.render('bowlC', { errors });
+                        if (errors.length > 0 && feedback.length > 0) {
+                            res.render('bowlC', { errors, feedback });
                             errors = []
+                        }
+                        else if (errors.length > 0 && feedback.length === 0) {
+                            res.render('bowlC', {errors});
+                            errors = [];
                         }
                     }
                     else {
+                        feedback.push({message: entreearr[j].item + " has been added to your order"});
+                        res.render('bowlC', {feedback})
                         pool.query("INSERT INTO currentorders VALUES ($1,NULL)", [entreearr[j].item], (err, result) => {
                             if (err) throw err;
                         })
@@ -154,7 +166,7 @@ router.get('/orderC/bowlC', (req, res) => {
 
 router.get('/orderC/entreesC', (req, res) => {
     entreearr = []
-    let errors = [];
+    let feedback = [];
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' ORDER by id;")
         .then(query_res => {
@@ -166,10 +178,8 @@ router.get('/orderC/entreesC', (req, res) => {
             console.log(entreearr.length);
             for (let i = 0; i < entreearr.length; i++) {
                 router.post('/orderC/entreesC/entree/' + i, (req, res) => {
-                    console.log(entreearr[i].item + " has been added to your order");
-                    errors.push({ message: entreearr[i].item + " has been added to your order" });
-                    res.render('entreesC', { errors });
-                    errors = [];
+                    feedback.push({ message: entreearr[i].item + " has been added to your order" });
+                    res.render('entreesC', { feedback });
                     pool.query("INSERT INTO currentorders VALUES ($1,$2)", [entreearr[i].item, entreearr[i].price], (err, result) => {
                         if (err) throw err;
                     })
@@ -187,6 +197,7 @@ router.get('/orderC/entreesC', (req, res) => {
  */
 router.get('/orderC/sidesC', (req, res) => {
     entreearr = []
+    let feedback = [];
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'sides' ORDER by id;")
         .then(query_res => {
@@ -198,6 +209,9 @@ router.get('/orderC/sidesC', (req, res) => {
             console.log(entreearr.length);
             for (let i = 0; i < entreearr.length; i++) {
                 router.post('/orderC/sidesC/entree/' + i, (req, res) => {
+                    feedback.push({ message: entreearr[i].item + " has been added to your order" });
+                    res.render('sidesC', { feedback });
+                    feedback = [];
                     pool.query("INSERT INTO currentorders VALUES ($1,$2)", [entreearr[i].item, entreearr[i].price], (err, result) => {
                         if (err) throw err;
                     })
@@ -218,6 +232,7 @@ router.get('/orderC/biggerplateC', (req, res) => {
     var entree_count = 0;
     var sides_count = 0;
     let errors = [];
+    let feedback = [];
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
@@ -235,13 +250,18 @@ router.get('/orderC/biggerplateC', (req, res) => {
                     if (sides_count < 1) {
                         errors.push({ message: "please choose 1 side" });
                     }
-                    if (errors.length > 0) {
-                        res.render('biggerplateC', { errors });
+                    if (errors.length > 0 && feedback.length > 0) {
+                        res.render('biggerplateC', { errors, feedback });
                         errors = []
+                    }
+                    else if (errors.length > 0 && feedback.length === 0) {
+                        res.render('biggerplateC', {errors});
+                        errors = [];
                     }
                 }
                 else {
                     res.redirect('/customers/orderC')
+                    feedback = [];
                     entree_count = 0;
                     sides_count = 0;
                 }
@@ -257,12 +277,18 @@ router.get('/orderC/biggerplateC', (req, res) => {
                         if ((entreearr[j].category == 'sides' && sides_count == 1)) {
                             errors.push({ message: "You can only choose at maximum 1 side for a biggerplate!" });
                         }
-                        if (errors.length > 0) {
-                            res.render('biggerplateC', { errors });
+                        if (errors.length > 0 && feedback.length > 0) {
+                            res.render('biggerplateC', { errors, feedback });
                             errors = []
+                        }
+                        else if (errors.length > 0 && feedback.length === 0) {
+                            res.render('biggerplateC', {errors});
+                            errors = [];
                         }
                     }
                     else {
+                        feedback.push({ message: entreearr[j].item + " has been added to your order" });
+                        res.render('biggerplateC', { feedback });
                         pool.query("INSERT INTO currentorders VALUES ($1,NULL)", [entreearr[j].item], (err, result) => {
                             if (err) throw err;
                         })
@@ -293,6 +319,7 @@ router.get('/orderC/plateC', (req, res) => {
     var entree_count = 0;
     var sides_count = 0;
     let errors = [];
+    let feedback = [];
     pool
         .query("SELECT item,price,category FROM inventory WHERE category = 'entree' OR category = 'sides' ORDER by id;")
         .then(query_res => {
@@ -315,13 +342,18 @@ router.get('/orderC/plateC', (req, res) => {
                             if (sides_count < 1) {
                                 errors.push({ message: "please choose 1 side" });
                             }
-                            if (errors.length > 0) {
-                                res.render('plateC', { errors });
+                            if (errors.length > 0 && feedback.length > 0) {
+                                res.render('plateC', { errors, feedback });
                                 errors = []
+                            }
+                            else if (errors.length > 0 && feedback.length === 0) {
+                                res.render('plateC', {errors});
+                                errors = [];
                             }
                         }
                         else {
                             res.redirect('/customers/orderC')
+                            feedback = [];
                             entree_count = 0;
                             sides_count = 0;
                         }
@@ -337,12 +369,18 @@ router.get('/orderC/plateC', (req, res) => {
                                 if ((entreearr[j].category == 'sides' && sides_count == 1)) {
                                     errors.push({ message: "You can only choose at maximum 1 side for a plate!" });
                                 }
-                                if (errors.length > 0) {
-                                    res.render('plateC', { errors });
+                                if (errors.length > 0 && feedback.length > 0) {
+                                    res.render('plateC', { errors, feedback });
                                     errors = []
+                                }
+                                else if (errors.length > 0 && feedback.length === 0) {
+                                    res.render('plateC', {errors});
+                                    errors = [];
                                 }
                             }
                             else {
+                                feedback.push({ message: entreearr[j].item + " has been added to your order" });
+                                res.render('plateC', { feedback });
                                 pool.query("INSERT INTO currentorders VALUES ($1,NULL)", [entreearr[j].item], (err, result) => {
                                     if (err) throw err;
                                 })
@@ -467,6 +505,9 @@ router.post('/orderC/biggerplateC', (req, res) => {
  * @param {callback} middleware - Express middleware.
  */
 router.post('/orderC/reset', (req, res) => {
+    let feedback = [];
+    feedback.push("Your order has been cleared");
+    res.render('orderC', {feedback});
     pool.query("TRUNCATE TABLE currentorders")
 });
 router.get('/orderslistC', (req, res) => {

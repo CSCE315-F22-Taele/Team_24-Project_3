@@ -57,12 +57,12 @@
       <h1>Entrees</h1>
       <ul>
         <div class="col-sm">
-          <div class="text-danger">
-            <% if (typeof errors !='undefined' ) { %>
-              <% errors.forEach(error=> { %>
-                <li>
-                  <%= error.message %>
-                </li>
+          <div class="text-success">
+            <% if (typeof feedback !='undefined' ) { %>
+              <% feedback.forEach(item=> { %>
+                <li><strong>
+                  <%= item.message %>
+                </strong></li>
                 <% }) %>
                   <% } %>
           </div>
