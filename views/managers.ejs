@@ -4,18 +4,20 @@
     white-space: nowrap;
     padding-top: 20px;
   }
-  body  {
+
+  body {
     background-image: linear-gradient(to bottom, rgba(78, 78, 78, 0.52), rgba(133, 67, 84, 0.73)),
-                      url('/testbackground.jpg');
+      url('/testbackground.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-color: black;
   }
+
   .btn.btn-primary.btn-block.mb-2 {
-        color: black;
-    }
+    color: black;
+  }
 </style>
 
 <body></body>
@@ -25,26 +27,22 @@
 </div>
 
 <div class="row mt-5">
-    <div class="col-md-6 m-auto">
-      <div class="card card-body text-center">
-        
-        <h1>Managers</h1>
-        <a href="/managers/inventory" class="btn btn-primary btn-block mb-2"
-        >Inventory</a>
-        <a href="/managers/saleshistory" class="btn btn-primary btn-block mb-2"
-        >Sales History</a>
-        <a href="/managers/employeelist" class="btn btn-primary btn-block mb-2"
-        >Employee List</a>
-        <a href="/managers/menu" class="btn btn-primary btn-block mb-2"
-        >Menu</a>
-        <a href="/" class="btn btn-primary btn-block mb-2">Return</a>
+  <div class="col-md-6 m-auto">
+    <div class="card card-body text-center">
 
-        <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
-            <script>
-                function translateDropdown() {
-                    new google.translate.TranslateElement(
-                        {pageLanguage: 'en'}, 'google_translate_id'
-                    )
-                }
-            </script>
-            <div id="google_translate_id"></div>
+      <h1>Managers</h1>
+      <a href="/managers/inventory" class="btn btn-primary btn-block mb-2">Inventory</a>
+      <a href="/managers/saleshistory" class="btn btn-primary btn-block mb-2">Sales History</a>
+      <a href="/managers/employeelist" class="btn btn-primary btn-block mb-2">Employee List</a>
+      <a href="/managers/menu" class="btn btn-primary btn-block mb-2">Menu</a>
+      <a href="/" class="btn btn-primary btn-block mb-2">Return</a>
+
+      <script src="https://translate.google.com/translate_a/element.js?cb=translateDropdown"></script>
+      <script>
+        function translateDropdown() {
+          new google.translate.TranslateElement(
+            { pageLanguage: 'en' }, 'google_translate_id'
+          )
+        }
+      </script>
+      <div id="google_translate_id"></div>

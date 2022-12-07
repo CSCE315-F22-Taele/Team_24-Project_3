@@ -2,95 +2,115 @@
     #sameline {
         overflow: hidden;
         white-space: nowrap;
-        padding-top: 20px;
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
-    body  {
+
+    a:link {
+        color: black;
+    }
+
+    a:visited {
+        color: black;
+    }
+
+    a:hover {
+        color: #e6ebe7;
+    }
+
+    body {
         background-image: linear-gradient(to bottom, rgba(78, 78, 78, 0.52), rgba(133, 67, 84, 0.73)),
-                      url('/testbackground.jpg');
+            url('/testbackground.jpg');
         background-position: center center;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
         background-color: black;
     }
+
     .btn.btn-primary.btn-block.mb-2 {
         color: black;
     }
 </style>
 
 <body></body>
-  
-  <div id="sameline">
+
+<div id="sameline" class="btn btn-primary btn-block mb-1">
     <a href="/">Main Menu</a><a> --> </a>
     <a href="/customers/customers">Customers</a>
     <a> --> Order</a>
-  </div>
+</div>
 
 <div class="row mt-5">
     <div class="col-md-6 m-auto">
-      <div class="card card-body text-center">
-        <div id="google_translate_id"></div>
-        <a href="/customers/customers" class="btn btn-primary btn-block mb-2">Return</a>
-        <a href="/customers/orderslistC" class="btn btn-primary btn-block mb-2"
-        >View Current Order</a>
-        <div class="float-left">
-        <form action = "/customers/orderC/reset" method = "POST"> 
-            <input type = "submit" value = "Reset orders"  class="btn btn-primary btn-block mb-2"/> 
-        </form>
-        <div class="float-right">
-            <a href="/customers/orderC/orderconfirmC">
-                <button type="button" class="btn btn-primary btn-block mb-2">
-                    Submit order
-                </button>
-            </a>
-            
-
-    </div>
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-6">
-                    <form action = "/customers/orderC/bowlC" method = "POST"> 
-                        <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;" id ="img1" alt="picture of a panda express bowl"> 
-                        <input type = "submit" value = "Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
-                    </form>
-                </div>
-
-                <div class="col-6">
-                    <form action = "/customers/orderC/plateC" method = "POST"> 
-                        <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;" id ="img2" alt="picture of a panda express plate">
-                        <input type = "submit" value = "Plate: $<%= bowllist[1].price %>" class="btn btn-success">
-                    </form>
-                </div>
-
-                <div class="col-6">
-                    <form action = "/customers/orderC/biggerplateC" method = "POST"> 
-                        <img src="/pandabiggerplate.png" class="img-thumbnail" style="margin-bottom: 7px;"id ="img3" alt="picture of a panda express bigger plate"> 
-                        <input type = "submit" value = "Biggerplate: $<%= bowllist[2].price %>" class="btn btn-success">
-                    </form>
-                </div>
-        
-                <div class="col-6">
-                    <a href="/customers/orderC/sidesC">
-                        <img src="/sides.png" class="img-thumbnail" style="margin-bottom: 7px;"id ="img4" alt="picture of a panda express side"> 
-                        <button type="button" class="btn btn-success">
-                            Sides
+        <div class="card card-body text-center">
+            <div id="google_translate_id"></div>
+            <a href="/customers/customers" class="btn btn-primary btn-block mb-2">Return</a>
+            <a href="/customers/orderslistC" class="btn btn-primary btn-block mb-2">View Current Order</a>
+            <div class="float-left">
+                <form action="/customers/orderC/reset" method="POST">
+                    <input type="submit" value="Reset orders" class="btn btn-primary btn-block mb-2" />
+                </form>
+                <div class="float-right">
+                    <a href="/customers/orderC/orderconfirmC">
+                        <button type="button" class="btn btn-primary btn-block mb-2">
+                            Submit order
                         </button>
                     </a>
-                </div>
 
-                <div class="col-sm">
-                    <a href="/customers/orderC/entreesC">
-                        <img src="/entree.png" class="img-thumbnail" style="margin-bottom: 7px;" alt="picture of a panda express entree"> 
-                        <button type="button" class="btn btn-success">
-                            Entrees
-                        </button>
-                    </a>
+
+                </div>
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-6">
+                            <form action="/customers/orderC/bowlC" method="POST">
+                                <img src="/pandabowl.png" class="img-thumbnail" style="margin-bottom: 7px;" id="img1"
+                                    alt="picture of a panda express bowl">
+                                <input type="submit" value="Bowl: $<%= bowllist[0].price %>" class="btn btn-success">
+                            </form>
+                        </div>
+
+                        <div class="col-6">
+                            <form action="/customers/orderC/plateC" method="POST">
+                                <img src="/pandaplate.png" class="img-thumbnail" style="margin-bottom: 7px;" id="img2"
+                                    alt="picture of a panda express plate">
+                                <input type="submit" value="Plate: $<%= bowllist[1].price %>" class="btn btn-success">
+                            </form>
+                        </div>
+
+                        <div class="col-6">
+                            <form action="/customers/orderC/biggerplateC" method="POST">
+                                <img src="/pandabiggerplate.png" class="img-thumbnail" style="margin-bottom: 7px;"
+                                    id="img3" alt="picture of a panda express bigger plate">
+                                <input type="submit" value="Biggerplate: $<%= bowllist[2].price %>"
+                                    class="btn btn-success">
+                            </form>
+                        </div>
+
+                        <div class="col-6">
+                            <a href="/customers/orderC/sidesC">
+                                <img src="/sides.png" class="img-thumbnail" style="margin-bottom: 7px;" id="img4"
+                                    alt="picture of a panda express side">
+                                <button type="button" class="btn btn-success">
+                                    Sides
+                                </button>
+                            </a>
+                        </div>
+
+                        <div class="col-sm">
+                            <a href="/customers/orderC/entreesC">
+                                <img src="/entree.png" class="img-thumbnail" style="margin-bottom: 7px;"
+                                    alt="picture of a panda express entree">
+                                <button type="button" class="btn btn-success">
+                                    Entrees
+                                </button>
+                            </a>
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
-
         </div>
-
     </div>
-  </div>
-</div>
