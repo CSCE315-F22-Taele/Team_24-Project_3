@@ -507,7 +507,7 @@ router.post('/orderC/biggerplateC', (req, res) => {
  */
 router.post('/orderC/reset', (req, res) => {
     let feedback = [];
-    feedback.push("Your order has been cleared");
+    feedback.push( {message: "Your order has been cleared"});
     res.render('orderC', {feedback});
     pool.query("TRUNCATE TABLE currentorders")
 });

@@ -6,6 +6,10 @@
         padding-bottom: 15px;
     }
 
+    #float {
+        float: inline-start;
+    }
+
     a:link {
         color: black;
     }
@@ -46,15 +50,15 @@
         <div class="card card-body text-center">
             <div id="google_translate_id"></div>
             <ul>
-                <div class="text-success">
-                  <% if (typeof feedback !='undefined' ) { %>
-                    <% feedback.forEach(item=> { %>
-                      <li><strong>
+            <div class="text-success" id="float">
+                <% if (typeof feedback !='undefined' ) { %>
+                  <% feedback.forEach(item=> { %>
+                    <li><strong>
                         <%= item.message %>
-                      </strong></li>
-                    <% }) %>
-                  <% } %>
-                </div>
+                    </strong></li>
+                  <% }) %>
+                <% } %>
+            </div>
             </ul>
             <a href="/customers/customers" class="btn btn-primary btn-block mb-2">Return</a>
             <a href="/customers/orderslistC" class="btn btn-primary btn-block mb-2">View Current Order</a>
